@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.kremote-files</groupId>
+  <version>1.0</version>
+  <name>Remote Files</name>
+  <dependencies>
+  	<dependency>
+  		<groupId>commons-fileupload</groupId>
+  		<artifactId>commons-fileupload</artifactId>
+  		<version>1.3.3</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.google.code.gson</groupId>
+  		<artifactId>gson</artifactId>
+  		<version>2.4</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>javax.servlet</groupId>
+  		<artifactId>servlet-api</artifactId>
+  		<version>2.4</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.jcraft</groupId>
+  		<artifactId>jsch</artifactId>
+  		<version>0.1.54</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.commons</groupId>
+  		<artifactId>commons-lang3</artifactId>
+  		<version>3.7</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.auth0</groupId>
+  		<artifactId>java-jwt</artifactId>
+  		<version>3.3.0</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.googlecode.json-simple</groupId>
+  		<artifactId>json-simple</artifactId>
+  		<version>1.1.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>commons-io</groupId>
+  		<artifactId>commons-io</artifactId>
+  		<version>2.5</version>
+  	</dependency>
+  </dependencies>
+  <organization>
+  	<name>KawanSoft</name>
+  	<url>http://www.kawansoft.com</url>
+  </organization>
+  <url>https://www.kremote-files.com</url>
+  <description>KRemote Files is a secure Open Source framework that allows to program very easily file uploads/downloads? remote file access and RPC through HTTP
+File transfers include powerful features like file chunking and automatic 
+recovery mechanism.</description>
+  <inceptionYear>January 2018</inceptionYear>
+  <artifactId>kremote-files</artifactId>
+  <scm>
+  	<url>https://github.com/kawansoft/kremote-files</url>
+  	<developerConnection>https://github.com/kawansoft/kremote-files</developerConnection>
+  </scm>
+</project>

@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+	
+<project name="Buildfile for kremote-files-client-x.y.z jar and kremote-files-server-x.y.z jar" default="all" basedir=".">
+    
+	<!-- Update the version for java versionning --> 
+    <property name="version"          		value="1.0"/> 
+	
+    <!-- Update the webapp.lib.dir for your servlet container WEB-INF\lib installation --> 	
+    <property name="webapp.lib.dir"   		value="c:\tomcat\webapps\kremote-files\WEB-INF\lib"/> 
+		
+	<!-- Sister test projects located in same directory as this projet -->
+	<property name="kremote-files-test.dir"   			value="..\..\kremote-files-test\lib"/>   	
+    <property name="kremote-files-android-test.dir" 	value="..\..\kremote-files-android-test\lib"/>  
+    <property name="kremote-files-android-sample.dir" 	value="..\..\kremote-files-android-sample\lib"/>  
+	    	
+    <property name="kremote-files-server.jar"   value="kremote-files-server-${version}.jar"/>    	
+    <property name="kremote-files-client.jar"   value="kremote-files-client-${version}.jar"/> 
+    	
+    <property name="lib.dir"                 value="../lib"/> 
+    <property name="dist.dir"                value="../dist"/>   
+    <property name="bin.dir"                 value="../target/classes"/> 
+        	
+    <target name="jar_server" description="Generates kremote-files-server-x.y.z.jar in the 'dist.dir' directory.">
+        <jar jarfile="${dist.dir}/${kremote-files-server.jar}" 
+         basedir="${bin.dir}"
+         includes="**/*.class"
+        	
+         excludes="**org/kawanfw/commons/api/client/**,
+		        	**org/kawanfw/commons/client/http/**,
+		        	**org/kawanfw/file/api/client/**,
+		        	**org/kawanfw/file/api/util/**,
+		        	**org/kawanfw/file/test/**, 
+        	        **org/kawanfw/file/examples/**,
+        	        **com/kremotefiles/quickstart/**"
+        />  
+    </target>
+				
+    <target name="jar_client" depends="jar_server" description="Generates kremote-files-client-x.y.zjar in the 'dist.dir' directory.">
+        <jar jarfile="${dist.dir}/${kremote-files-client.jar}" 
+         basedir="${bin.dir}"
+         includes="**/*.class"
+        
+        	excludes="**org/kawanfw/commons/api/server/**,
+                      **org/kawanfw/commons/server/util/**,
+                      **org/kawanfw/file/test/**, 
+                      **org/kawanfw/file/examples/**, 
+                      **org/kawanfw/file/servlet/**, 
+                      **org/kawanfw/file/api/server/**,
+                      **com/kremotefiles/quickstart/**"
+        />  
+    </target>           
+	       	
+	<target name="copy.webapp.lib.dir" depends="jar_client">
+	   <copy file="${dist.dir}/${kremote-files-server.jar}" todir="${webapp.lib.dir}"/>
+    </target>
+		
+	<!--
+    <target name="copy.file.test" depends="copy.webapp.lib.dir">
+       <copy file="${dist.dir}/${kremote-files-client.jar}" todir="${kremote-files-test.dir}"/>
+    </target>
+    	
+    <target name="copy.file.android.test" depends="copy.file.test">
+       <copy file="${dist.dir}/${kremote-files-client.jar}" todir="${kremote-files-android-test.dir}"/>
+    </target>
+    
+    <target name="copy.file.android.sample" depends="copy.file.android.test">
+       <copy file="${dist.dir}/${kremote-files-client.jar}" todir="${kremote-files-android-sample.dir}"/>
+    </target>
+    -->
+	
+	<target name="all" depends="copy.webapp.lib.dir" description="Do all!">
+	</target>
+  
+</project>

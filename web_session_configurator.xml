@@ -1,0 +1,22 @@
+<servlet>
+    <servlet-name>ServerFileManager</servlet-name>
+    <servlet-class>org.kawanfw.file.servlet.ServerFileManager</servlet-class>
+    
+    <init-param>        
+        <param-name>fileConfiguratorClassName</param-name>
+        <param-value>org.acme.config.MyFileConfigurator</param-value>
+    </init-param>  
+        
+    <init-param>        
+        <param-name>sessionConfiguratorClassName</param-name>
+        <param-value>com.acme.MySessionConfigurator</param-value>
+    </init-param> 
+    
+    <load-on-startup>1</load-on-startup>
+
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>ServerFileManager</servlet-name>
+    <url-pattern>ServerFileManager</url-pattern>
+</servlet-mapping>
