@@ -30,7 +30,7 @@ public class TestRunnerConsoleNioSSL {
 
     public static void main(String[] args) throws Exception {
 
-	TestParms.KREMOTE_FILES = "https://localhost:8443/kremote-files/ServerFileManager";		
+	TestParms.KREMOTE_FILES_URL_LOCAL = "https://localhost:8443/kremote-files/ServerFileManager";		
 	TestRunnerConsoleNio.startIt();
     }
     

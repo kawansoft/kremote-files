@@ -30,7 +30,7 @@ public class TestRunnerConsoleUnixServerNio {
 
     public static void main(String[] args) throws Exception {
 
-	TestParms.KREMOTE_FILES = "http://www.aceql.com/kremote-files/ServerFileManager";	
+	TestParms.KREMOTE_FILES_URL_LOCAL = "http://www.aceql.com/kremote-files/ServerFileManager";	
 	TestRunnerConsoleNio.startIt();
     }
     

@@ -61,7 +61,7 @@ public class StaticFilterTest{
      * @param args
      */
     public static void main(String[] args) throws Exception {
-	RemoteSession remoteSession = new RemoteSession(TestParms.KREMOTE_FILES,
+	RemoteSession remoteSession = new RemoteSession(TestParms.KREMOTE_FILES_URL_LOCAL,
 		TestParms.REMOTE_USER, TestParms.REMOTE_PASSWORD.toCharArray());
 	doIt(remoteSession);
     }

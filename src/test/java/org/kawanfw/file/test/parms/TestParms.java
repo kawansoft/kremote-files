@@ -60,7 +60,8 @@ public class TestParms {
     public static boolean COMPRESSION_ON = true;
     
     /** Remote parameters */    
-    public static String KREMOTE_FILES = "http://localhost:8080/kremote-files/ServerFileManager";
+    public static String KREMOTE_FILES_URL_LOCAL = "http://localhost:8080/kremote-files/ServerFileManager";
+    public static String KREMOTE_FILES_URL_REMOTE = "https://www.aceql.com/kremote-files/ServerFileManager";
     public static String REMOTE_USER = "username";
     public static String REMOTE_USER_2 = "username_2";
     public static String REMOTE_PASSWORD = "password";

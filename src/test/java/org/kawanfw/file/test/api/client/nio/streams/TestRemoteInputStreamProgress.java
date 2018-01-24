@@ -96,7 +96,7 @@ public class TestRemoteInputStreamProgress {
 	    SessionParameters sessionParameters = new SessionParameters();
 	    sessionParameters.setDownloadChunkLength(RemoteSession.MB * 3);
 	    
-	    remoteSession = new RemoteSession(TestParms.KREMOTE_FILES,
+	    remoteSession = new RemoteSession(TestParms.KREMOTE_FILES_URL_LOCAL,
 		    TestParms.REMOTE_USER,
 		    TestParms.REMOTE_PASSWORD.toCharArray(), proxy, passwordAuthentication, sessionParameters);
 	}

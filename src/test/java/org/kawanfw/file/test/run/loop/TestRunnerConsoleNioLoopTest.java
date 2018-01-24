@@ -124,7 +124,7 @@ public class TestRunnerConsoleNioLoopTest {
 	    
 	    //Thread.sleep(100);
 	    
-	    remoteSession = new RemoteSession(TestParms.KREMOTE_FILES,
+	    remoteSession = new RemoteSession(TestParms.KREMOTE_FILES_URL_LOCAL,
 		    TestParms.REMOTE_USER,
 		    TestParms.REMOTE_PASSWORD.toCharArray(), null, null,
 		    null);

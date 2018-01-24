@@ -56,7 +56,7 @@ public class RenameFilesNio {
     public void test() throws Exception {
 	
 	RemoteSession remoteSession = new RemoteSession(
-		TestParms.KREMOTE_FILES, TestParms.REMOTE_USER,
+		TestParms.KREMOTE_FILES_URL_LOCAL, TestParms.REMOTE_USER,
 		TestParms.REMOTE_PASSWORD.toCharArray());
 
 	test(remoteSession);
@@ -109,7 +109,7 @@ public class RenameFilesNio {
 	MessageDisplayer.display("==> " + renameFail);
 	
 	// No more text on Linux
-	if (TestParms.KREMOTE_FILES.equals("http://www.awake-file.org/kremote-files/ServerFileManager")) {
+	if (TestParms.KREMOTE_FILES_URL_LOCAL.equals("http://www.awake-file.org/kremote-files/ServerFileManager")) {
 	    return;
 	}
 	

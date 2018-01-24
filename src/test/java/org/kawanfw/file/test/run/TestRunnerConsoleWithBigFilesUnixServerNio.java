@@ -40,7 +40,7 @@ public class TestRunnerConsoleWithBigFilesUnixServerNio {
      * @param args
      */
     public static void main(String[] args) throws Exception {
-	TestParms.KREMOTE_FILES = "https://www.aceql.com/kremote-files/ServerFileManager";
+	TestParms.KREMOTE_FILES_URL_LOCAL = "https://www.aceql.com/kremote-files/ServerFileManager";
 	TestParms.TEST_BIG_FILES = true;
 	TestRunnerConsoleNio.startIt();
     }
