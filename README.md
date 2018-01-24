@@ -7,6 +7,7 @@
          * [Accessing remote files](#accessing-remote-files)
          * [Files upload and download](#files-upload-and-download)
          * [Secure RPC Calls](#secure-rpc-calls)
+      * [Architecture](#architecture)
       * [Features](#features)
       * [Requirements](#requirements)
       * [License](#license)
@@ -55,27 +56,16 @@
       * [Session parameters](#session-parameters)
       * [Managing temporary files](#managing-temporary-files)
 
+
 # Fundamentals
 
 ## What is KRemote Files?
 
-KRemote Files is a secure Open Source framework that allows to program very easily remote file access, file uploads/downloads and RPC through HTTP.  File transfers include powerful features like file chunking and automatic recovery mechanism.  
+KRemote Files is a secure Open Source client/server framework that allows to program very easily remote file access, file uploads/downloads and RPC through HTTP.  File transfers include powerful features like file chunking and automatic recovery mechanism.  KRemote Files allows 3 types of operation over HTTP:
 
- The KRemote Files framework consists of:
-
-- A Client  Library. 
-- A Server Manager.     
-- User Configuration classes injected at runtime (start of server container).
-
-The Client Library is installed on the client side - typically a PC/Mac or an Android device. The client application - typically a Desktop or Android application - accesses the remote files or java classes it through APIs. The execution of each KRemote Files command is conditioned by the rules defined in the User Configuration classes. 
-
-All communications between the PC and the Server are done using HTTP protocol on the standard 80 and 443 ports. 
-
-KRemote Files allows 3 types of operation over HTTP:
-
-1. Accessing  remote files with `java.io.File` syntax.
-2. Files upload and download with `java.io.OutputStream` and `java.io.InputStream` syntax.
-3. RPC calls.
+1. Accessing remote files with `java.io.File` syntax.
+2. Files upload and download using `java.io.OutputStream` and `java.io.InputStream` syntax.
+3. Secure RPC calls.
 
 ### Accessing remote files
 
@@ -220,6 +210,18 @@ We use `RemoteSession.call` method to call the `add` method from client side.:
 
 	System.out.println("Result: " + result);
 ```
+
+## Architecture
+
+The KRemote Files framework consists of:
+
+- A Client  Library. 
+- A Server Manager.     
+- User Configuration classes injected at runtime (start of server container).
+
+The Client Library is installed on the client side - typically a PC/Mac or an Android device. The client application - typically a Desktop or Android application - accesses the remote files or java classes it through APIs. The execution of each KRemote Files command is conditioned by the rules defined in the User Configuration classes. 
+
+All communications between the PC and the Server are done using HTTP protocol on the standard 80 and 443 ports. 
 
 ## Features
 
