@@ -256,7 +256,7 @@ KRemote Files is licensed through the GNU Lesser General Public License (LGPL v2
 
 # Installation
 
-[*Download*](http://www.kremote-files.com/download) and unzip `kremote-files-1.0-bin.zip` or download and untar `kremote-files-1.0-bin.tar.gz`.
+[Download](http://www.kremote-files.com/download) and unzip `kremote-files-1.0-bin.zip` or download and untar `kremote-files-1.0-bin.tar.gz`.
 
 ## Server Installation
 
