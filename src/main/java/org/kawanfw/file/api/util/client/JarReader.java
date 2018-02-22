@@ -34,7 +34,6 @@ import java.util.logging.Level;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import org.apache.commons.io.IOUtils;
 import org.kawanfw.commons.util.ClientLogger;
 import org.kawanfw.commons.util.FrameworkDebug;
 
@@ -89,7 +88,14 @@ public class JarReader {
 		}
 	    return classNames;
 	} finally {
-	    IOUtils.closeQuietly(in);
+	    // IOUtils.closeQuietly(in);
+
+	    if (in != null) {
+		try {
+		    in.close();
+		} catch (Exception e) {
+		}
+	    }
 	}
     }
 

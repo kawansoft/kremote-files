@@ -212,7 +212,7 @@ public class DefaultJwtSessionConfigurator implements SessionConfigurator {
      */
     @Override
     public int getSessionTimelife() {
-	return 1;
+	return 0;
     }
 
 }

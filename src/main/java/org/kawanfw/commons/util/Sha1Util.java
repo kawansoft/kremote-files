@@ -33,7 +33,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 
-import org.apache.commons.io.IOUtils;
 import org.kawanfw.commons.codec.binary.CodecHex;
 
 /**
@@ -119,11 +118,10 @@ public class Sha1Util {
 	FileInputStream fisIn = new FileInputStream(file);
 	BufferedInputStream bisIn = new BufferedInputStream(fisIn);
 
-	DataInputStream disIn = null;
+	//DataInputStream disIn = null;
 
-	try {
-	    disIn = new DataInputStream(bisIn);
-
+	try (DataInputStream disIn = new DataInputStream(bisIn);){
+	    
 	    // Bytes containing the MD5 or SHA-1 Hash Code
 	    byte[] bytesHash = new byte[160];
 
@@ -151,7 +149,7 @@ public class Sha1Util {
 
 	    return bytesHash;
 	} finally {
-	    IOUtils.closeQuietly(disIn);
+	    //IOUtils.closeQuietly(disIn);
 	}
 
     }

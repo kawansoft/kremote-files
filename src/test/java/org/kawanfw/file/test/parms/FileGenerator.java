@@ -32,7 +32,6 @@ import java.io.OutputStream;
 import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.kawanfw.file.api.client.RemoteSession;
 
 /**
@@ -68,10 +67,9 @@ public class FileGenerator {
      */
     private static void generate(File file, long length) throws Exception {
 
-	OutputStream out = null;
-	try {
-	    out = new BufferedOutputStream(new FileOutputStream(file));
 
+	try (OutputStream out = new BufferedOutputStream(new FileOutputStream(file));){
+	    
 	    long cpt = 0;
 	    while (true) {
 		
@@ -86,7 +84,7 @@ public class FileGenerator {
 		}
 	    }
 	} finally {
-	    IOUtils.closeQuietly(out);
+	    //IOUtils.closeQuietly(out);
 	}
     }
     

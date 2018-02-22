@@ -37,7 +37,6 @@ import java.net.Proxy;
 import java.net.UnknownHostException;
 import java.util.Date;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.kawanfw.file.api.client.RemoteFile;
 import org.kawanfw.file.api.client.RemoteInputStream;
@@ -53,8 +52,8 @@ import org.kawanfw.file.test.util.ProgressUtil;
 
 /**
  * 
- * TestReload the download of remote files and that the hash values match hash values
- * of the original local files
+ * TestReload the download of remote files and that the hash values match hash
+ * values of the original local files
  * 
  * @author Nicolas de Pomereu
  */
@@ -65,12 +64,11 @@ public class TestRemoteInputStreamProgress {
 	new TestRemoteInputStreamProgress().test();
     }
 
-    
     @Test
     public void test() throws Exception {
 	test(null);
     }
-    
+
     /**
      * @param remoteSession
      *            the KRemote Files Session
@@ -91,70 +89,91 @@ public class TestRemoteInputStreamProgress {
 
 	    ProxyLoader proxyLoader = new ProxyLoader();
 	    Proxy proxy = proxyLoader.getProxy();
-	    PasswordAuthentication passwordAuthentication = proxyLoader.getPasswordAuthentication();
-	    
+	    PasswordAuthentication passwordAuthentication = proxyLoader
+		    .getPasswordAuthentication();
+
 	    SessionParameters sessionParameters = new SessionParameters();
 	    sessionParameters.setDownloadChunkLength(RemoteSession.MB * 3);
-	    
+
 	    remoteSession = new RemoteSession(TestParms.KREMOTE_FILES_URL_LOCAL,
 		    TestParms.REMOTE_USER,
-		    TestParms.REMOTE_PASSWORD.toCharArray(), proxy, passwordAuthentication, sessionParameters);
+		    TestParms.REMOTE_PASSWORD.toCharArray(), proxy,
+		    passwordAuthentication, sessionParameters);
 	}
-	
+
 	InputStream in = null;
 	OutputStream out = null;
 
 	String remoteFile = null;
 	File file = null;
-	
-	//remoteFile = "/image_1_1.jpg";
-	//file = TestParms.getFileFromUserHome("image_1_1.jpg");
-		 
-	//remoteFile = "/javadoc-java6.zip";
-	//file = TestParms.getFileFromUserHome("javadoc-java6_2.zip");
-	
+
+	// remoteFile = "/image_1_1.jpg";
+	// file = TestParms.getFileFromUserHome("image_1_1.jpg");
+
+	// remoteFile = "/javadoc-java6.zip";
+	// file = TestParms.getFileFromUserHome("javadoc-java6_2.zip");
+
 	remoteFile = "/empty.txt";
 	file = TestParms.getFileFromUserHome("empty.txt");
-	
+
 	System.out.println(this.getClass().getSimpleName());
-	System.out.println(new Date() + " Chunk Length: " + ChunkUtil.getDownloadChunkLength(remoteSession) / RemoteSession.MB + " Mb.");
+	System.out
+		.println(
+			new Date() + " Chunk Length: "
+				+ ChunkUtil.getDownloadChunkLength(
+					remoteSession) / RemoteSession.MB
+				+ " Mb.");
 	System.out.println(new Date() + " Getting remote file length...");
-	long remoteFileLength = new RemoteFile(remoteSession, remoteFile).length();
-	System.out.println(new Date() + remoteFile + " " + remoteFileLength / RemoteSession.MB + " Mb.");
-	
+	long remoteFileLength = new RemoteFile(remoteSession, remoteFile)
+		.length();
+	System.out.println(new Date() + remoteFile + " "
+		+ remoteFileLength / RemoteSession.MB + " Mb.");
+
 	Chrono chrono = new Chrono(new Date());
 	file.delete();
-	
+
 	try {
-	    
+
 	    // Get an InputStreams from the file located on our servers
 	    in = new RemoteInputStream(remoteSession, remoteFile);
 	    out = new BufferedOutputStream(new FileOutputStream(file));
-	    	
+
 	    int cpt = 1;
 	    int tempLen = 0;
-	    byte [] buffer = new byte[1024 * 4];
+	    byte[] buffer = new byte[1024 * 4];
 	    int n = 0;
 	    System.out.println();
-	    
+
 	    while ((n = in.read(buffer)) != -1) {
 		tempLen += n;
 
-		if (remoteFileLength > 0
-			&& tempLen > remoteFileLength / 100) {
+		if (remoteFileLength > 0 && tempLen > remoteFileLength / 100) {
 		    tempLen = 0;
 		    ProgressUtil.percentPrintl(cpt++, System.out);
 		}
 		out.write(buffer, 0, n);
 	    }
-	    
+
 	} finally {
-	    IOUtils.closeQuietly(in);
-	    IOUtils.closeQuietly(out);
+	    // IOUtils.closeQuietly(in);
+	    // IOUtils.closeQuietly(out);
+	    if (in != null) {
+		try {
+		    in.close();
+		} catch (Exception e) {
+		}
+	    }
+
+	    if (out != null) {
+		try {
+		    out.close();
+		} catch (Exception e) {
+		}
+	    }
 	}
 
 	System.out.println();
-	
+
 	if (file.exists()) {
 	    chrono.end();
 	    System.out.println("File created: " + file);
@@ -162,7 +181,7 @@ public class TestRemoteInputStreamProgress {
 	    System.err.println("Impossible to create " + file
 		    + " from remote file " + remoteFile);
 	}
-		
+
     }
 
 }

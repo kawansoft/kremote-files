@@ -29,5 +29,5 @@ package org.kawanfw.file.version;
 
 public class FileVersionValues {
     public static final String VERSION = "v1.0";
-    public static final String DATE = "24-jan-2018";
+    public static final String DATE = "22-feb-2018";
 }

@@ -11,7 +11,6 @@ import java.net.InetAddress;
 import java.util.Properties;
 import java.util.logging.Level;
 
-import org.apache.commons.io.IOUtils;
 import org.kawanfw.commons.util.FrameworkFileUtil;
 import org.kawanfw.commons.util.Tag;
 import org.kawanfw.file.api.server.DefaultFileConfigurator;
@@ -79,13 +78,12 @@ public class Ssh {
 
 	if (file.exists()) {
 	    Properties prop = new Properties();
-	    InputStream in = null;
+	    //InputStream in = null;
 
-	    try {
-		in = new FileInputStream(file);
+	    try (InputStream in = new FileInputStream(file);){
 		prop.load(in);
 	    } finally {
-		IOUtils.closeQuietly(in);
+		//IOUtils.closeQuietly(in);
 	    }
 
 	    host = prop.getProperty("host");

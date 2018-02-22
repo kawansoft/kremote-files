@@ -205,6 +205,13 @@ public class ServerFileManager extends HttpServlet {
 		    .getName();
 	}
 	
+	if (sessionConfigurator == null) {
+	    sessionConfiguratorClassName = SESSIONS_CONFIGURATOR_CLASS_NAME;
+	} else {
+	    sessionConfiguratorClassName = sessionConfigurator.getClass()
+		    .getName();
+	}
+	
 	System.out.println();
 	System.out.println(Tag.PRODUCT_START + " "
 		+ org.kawanfw.file.version.FileVersion.getVersion());

@@ -38,7 +38,6 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.kawanfw.file.api.client.RemoteOutputStream;
 import org.kawanfw.file.api.client.RemoteSession;
@@ -155,8 +154,22 @@ public class InterruptRemoteOutputStreamOneBigFile {
 		}
 		continue;
 	    } finally {
-		IOUtils.closeQuietly(in);
-		IOUtils.closeQuietly(out);
+		//IOUtils.closeQuietly(in);
+		//IOUtils.closeQuietly(out);
+		
+		if (in != null) {
+		    try {
+			in.close();
+		    } catch (Exception e) {
+		    }
+		}
+
+		if (out != null) {
+		    try {
+			out.close();
+		    } catch (Exception e) {
+		    }
+		}
 	    }
 	}
 

@@ -35,7 +35,6 @@ import java.io.OutputStream;
 import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -72,27 +71,25 @@ public class FileJoiner {
 	int n = 0;
 	byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
 
-	OutputStream output = null;
-	InputStream input = null;
+	//OutputStream output = null;
+	//InputStream input = null;
 
-	try {
-	    output = new BufferedOutputStream(new FileOutputStream(file));
-
+	try (OutputStream output = new BufferedOutputStream(new FileOutputStream(file));){
+	   
 	    while (true) {
 		File filePart = new File(getFilePart(file, countFile));
 
 		if (filePart.exists()) {
 
-		    try {
+		    try (InputStream input = new BufferedInputStream(new FileInputStream(filePart));){
 			System.out.println(new Date() + " Joining part " + filePart);
-			input = new BufferedInputStream(new FileInputStream(
-				filePart));
+			
 
 			while (EOF != (n = input.read(buffer))) {
 			    output.write(buffer, 0, n);
 			}
 		    } finally {
-			IOUtils.closeQuietly(input);
+			//IOUtils.closeQuietly(input);
 		    }
 		    countFile++;
 		} else {
@@ -101,7 +98,7 @@ public class FileJoiner {
 	    }
 
 	} finally {
-	    IOUtils.closeQuietly(output);
+	    //IOUtils.closeQuietly(output);
 	}
     }
 

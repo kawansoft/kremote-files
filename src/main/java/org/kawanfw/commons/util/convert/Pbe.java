@@ -38,11 +38,10 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
-import org.apache.commons.io.IOUtils;
 import org.kawanfw.commons.codec.binary.CodecHex;
 
 public class Pbe {
-    
+
     public static final String KAWANFW_ENCRYPTED = "*!aw!*";
 
     /**
@@ -240,12 +239,13 @@ public class Pbe {
 	// Initialize PBE Cipher with key and parameters
 	pbeCipher.init(mode, pbeKey, pbeParamSpec);
 
-	InputStream in = null;
-	OutputStream out = null;
+	// InputStream in = null;
+	// OutputStream out = null;
 
-	try {
-	    in = new BufferedInputStream(new FileInputStream(fileIn));
-	    out = new BufferedOutputStream(new FileOutputStream(fileOut));
+	try (InputStream in = new BufferedInputStream(
+		new FileInputStream(fileIn));
+		OutputStream out = new BufferedOutputStream(
+			new FileOutputStream(fileOut));) {
 
 	    byte[] input = new byte[2048 * 10];
 	    int bytesRead;
@@ -261,8 +261,8 @@ public class Pbe {
 
 	    out.flush();
 	} finally {
-	    IOUtils.closeQuietly(in);
-	    IOUtils.closeQuietly(out);
+	    // IOUtils.closeQuietly(in);
+	    // IOUtils.closeQuietly(out);
 	}
 
     }

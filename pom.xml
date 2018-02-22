@@ -42,7 +42,7 @@
   	<dependency>
   		<groupId>commons-io</groupId>
   		<artifactId>commons-io</artifactId>
-  		<version>2.5</version>
+  		<version>2.6</version>
   	</dependency>
   </dependencies>
   <organization>
@@ -50,7 +50,7 @@
   	<url>http://www.kawansoft.com</url>
   </organization>
   <url>https://www.kremote-files.com</url>
-  <description>KRemote Files is a secure Open Source framework that allows to program very easily file uploads/downloads? remote file access and RPC through HTTP
+  <description>KRemote Files is a secure Open Source framework that allows to program very easily file uploads/downloads, remote file access and RPC through HTTP
 File transfers include powerful features like file chunking and automatic 
 recovery mechanism.</description>
   <inceptionYear>January 2018</inceptionYear>

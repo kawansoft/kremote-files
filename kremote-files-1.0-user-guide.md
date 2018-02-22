@@ -515,7 +515,7 @@ The interface to implement depends on your authentication need:
 
 After restarting you server, type the http address of the `ServerFileManager` servlet in a browser:
 
-http://www.yourhost.com/path-to-servlet/ServerFileManager
+`http://www.yourhost.com/path-to-servlet/ServerFileManager`
 
 It will display your configuration and a status line that should display: `OK & Running`.
 

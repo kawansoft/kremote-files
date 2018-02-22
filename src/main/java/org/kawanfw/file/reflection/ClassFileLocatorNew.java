@@ -154,7 +154,14 @@ public class ClassFileLocatorNew {
 	    return out.toByteArray();
 	    
 	} finally {
-	    IOUtils.closeQuietly(in);
+	    //IOUtils.closeQuietly(in);
+	    if (in != null) {
+		try {
+		    in.close();
+		}
+		catch (Exception e) { } // Ignore
+	    }
+	    
 	}
     }
     

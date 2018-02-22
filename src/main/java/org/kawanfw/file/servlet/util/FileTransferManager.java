@@ -141,7 +141,7 @@ public class FileTransferManager {
 		    long totalRead = copy(raf, out, chunkLength);
 		    debug(new Date() + " AFTER COPY " + totalRead);
 
-		    IOUtils.closeQuietly(raf);
+		    //IOUtils.closeQuietly(raf);
 
 		    if (lengthToSeek + totalRead >= file.length()) {
 			// End of operations
@@ -149,7 +149,15 @@ public class FileTransferManager {
 		    }
 
 		} finally {
-		    IOUtils.closeQuietly(raf);
+		    //IOUtils.closeQuietly(raf);
+		    if (raf != null) {
+			try {
+			    raf.close();
+			} catch (Exception e) {
+			    // TODO Auto-generated catch block
+			    e.printStackTrace();
+			}
+		    }
 		}
 
 		return true;
@@ -172,7 +180,14 @@ public class FileTransferManager {
 	    return true;
 
 	} finally {
-	    IOUtils.closeQuietly(in);
+	    //IOUtils.closeQuietly(in);
+	    if (in != null) {
+		try {
+		    in.close();
+		}
+		catch (Exception e) { 
+		} // Ignore
+	    }
 	}
 
     }
@@ -249,7 +264,7 @@ public class FileTransferManager {
 		copy(inputStream, raf, new byte[DEFAULT_BUFFER_SIZE]);
 		debug(new Date() + " AFTER COPY ");
 
-		IOUtils.closeQuietly(raf);
+		//IOUtils.closeQuietly(raf);
 
 		if (lastChunk) {
 		    // End of operations
@@ -257,7 +272,15 @@ public class FileTransferManager {
 		}
 
 	    } finally {
-		IOUtils.closeQuietly(raf);
+		//IOUtils.closeQuietly(raf);
+		if (raf != null) {
+		    try {
+			raf.close();
+		    } catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		    }
+		}
 	    }
 
 	} else {
@@ -276,7 +299,14 @@ public class FileTransferManager {
 		debug("file created : " + file);
 		debug("file.length(): " + file.length());
 	    } finally {
-		IOUtils.closeQuietly(out);
+		//IOUtils.closeQuietly(out);
+		if (out != null) {
+		    try {
+			out.close();
+		    } catch (Exception e) {
+			// e.printStackTrace();
+		    }
+		}
 	    }
 	}
 

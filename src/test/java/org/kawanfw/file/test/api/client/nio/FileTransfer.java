@@ -118,22 +118,22 @@ public class FileTransfer {
 //		    RemoteSession.REMOTE_SESSION_IS_CLOSED);
 //	}
 
-	InputStream in = null;
-	OutputStream out = null;
+	//InputStream in = null;
+	//OutputStream out = null;
 
 	// (IOUtils is a general IO stream manipulation utilities
 	// provided by Apache Commons IO)
 
-	try {
-	    in = new RemoteInputStream(remoteSession, pathname);
-	    out = new BufferedOutputStream(new FileOutputStream(file));
+	try ( InputStream in = new RemoteInputStream(remoteSession, pathname);
+	    OutputStream out = new BufferedOutputStream(new FileOutputStream(file));){
+	   
 	    IOUtils.copy(in, out);
 	    // Cleaner to close in here so that no Exception is thrown in
 	    // finally clause
 	    in.close();
 	} finally {
-	    IOUtils.closeQuietly(in);
-	    IOUtils.closeQuietly(out);
+	    //IOUtils.closeQuietly(in);
+	    //IOUtils.closeQuietly(out);
 	}
     }
     
@@ -220,22 +220,24 @@ public class FileTransfer {
 	}
 
 
-	InputStream in = null;
-	OutputStream out = null;
+	//InputStream in = null;
+	//OutputStream out = null;
 
 	// (IOUtils is a general IO stream manipulation utilities
 	// provided by Apache Commons IO)
 
-	try {
-	    in = new BufferedInputStream(new FileInputStream(file));
-	    out = new RemoteOutputStream(remoteSession, pathname, file.length());
+	try (InputStream in = new BufferedInputStream(
+		new FileInputStream(file));
+		OutputStream out = new RemoteOutputStream(remoteSession,
+			pathname, file.length());) {
+
 	    IOUtils.copy(in, out);
 	    // Cleaner to close out here so that no Exception is thrown in
 	    // finally clause
 	    out.close();
 	} finally {
-	    IOUtils.closeQuietly(in);
-	    IOUtils.closeQuietly(out);
+	    // IOUtils.closeQuietly(in);
+	    // IOUtils.closeQuietly(out);
 	}
     }
 

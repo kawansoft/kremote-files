@@ -38,7 +38,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 
-import org.apache.commons.io.IOUtils;
 import org.kawanfw.commons.util.ClientLogger;
 import org.kawanfw.commons.util.FrameworkDebug;
 import org.kawanfw.file.api.client.RemoteInputStream;
@@ -64,13 +63,18 @@ public class FilesTransferWithProgress {
 
     // progress & cancelled are Shareable variable between threads
 
-    /** Progress value between 0 and 100. Will be used by progress indicators. */
+    /**
+     * Progress value between 0 and 100. Will be used by progress indicators.
+     */
     private AtomicInteger progress = new AtomicInteger();
 
     /** Says if user has cancelled the file pload or download */
     private AtomicBoolean cancelled = new AtomicBoolean();
 
-    /** Use global var for StreamsTransferWithProgress in order to extract the current uploaded/download file */
+    /**
+     * Use global var for StreamsTransferWithProgress in order to extract the
+     * current uploaded/download file
+     */
     private StreamsTransferWithProgress streamsTransferWithProgressDownload;
 
     private StreamsTransferWithProgress streamsTransferWithProgressUpload;
@@ -95,26 +99,27 @@ public class FilesTransferWithProgress {
 
     /**
      * Returns the current remote file in download
+     * 
      * @return the current remote file in download
      */
     public String getCurrentPathnameDownload() {
 	if (streamsTransferWithProgressDownload != null) {
-	    return streamsTransferWithProgressDownload.getCurrentPathnameDownload();
-	}
-	else  {
+	    return streamsTransferWithProgressDownload
+		    .getCurrentPathnameDownload();
+	} else {
 	    return null;
 	}
     }
 
     /**
      * Returns the current remote file in upload
+     * 
      * @return the current remote file in upload
      */
     public String getCurrentPathnameUpload() {
 	if (streamsTransferWithProgressUpload != null) {
 	    return streamsTransferWithProgressUpload.getCurrentPathnameUpload();
-	}
-	else  {
+	} else {
 	    return null;
 	}
     }
@@ -143,10 +148,9 @@ public class FilesTransferWithProgress {
      * @throws ConnectException
      */
     public void download(List<String> remoteFiles, List<File> files,
-	    long totalLength) throws ConnectException,
-	    IllegalArgumentException, InvalidLoginException,
-	    UnknownHostException, SocketException, RemoteException,
-	    IOException, InterruptedException {
+	    long totalLength) throws ConnectException, IllegalArgumentException,
+	    InvalidLoginException, UnknownHostException, SocketException,
+	    RemoteException, IOException, InterruptedException {
 
 	if (remoteFiles == null) {
 	    throw new IllegalArgumentException("remoteFiles can not be null!");
@@ -160,20 +164,28 @@ public class FilesTransferWithProgress {
 
 	try {
 	    for (int i = 0; i < remoteFiles.size(); i++) {
-		InputStream in = new RemoteInputStream(remoteSession, remoteFiles
-			.get(i));
+		InputStream in = new RemoteInputStream(remoteSession,
+			remoteFiles.get(i));
 		inStreams.add(in);
 	    }
 
 	    streamsTransferWithProgressDownload = new StreamsTransferWithProgress(
 		    progress, cancelled);
-	    streamsTransferWithProgressDownload.download(inStreams, files, totalLength);
+	    streamsTransferWithProgressDownload.download(inStreams, files,
+		    totalLength);
 	} finally {
 
 	    // Clean all InputStream in case of Exception inside download
 	    if (inStreams != null) {
 		for (InputStream in : inStreams) {
-		    IOUtils.closeQuietly(in);
+		    // IOUtils.closeQuietly(in);
+		    if (in != null) {
+			try {
+			    in.close();
+			} catch (Exception e) {
+			    // e.printStackTrace();
+			}
+		    }
 		}
 	    }
 	}
@@ -181,12 +193,13 @@ public class FilesTransferWithProgress {
 
     /**
      * 
-     * Uploads a list of streams on the remote server. If a stream is closed, we bypass it
+     * Uploads a list of streams on the remote server. If a stream is closed, we
+     * bypass it
      * 
      * @param inStreams
      *            the inut stream to upload
      * @param inStreamlengths
-     * 			the lengt hof each input stream
+     *            the lengt hof each input stream
      * @param remoteFiles
      *            the corresponding server file names
      * @param totalLength
@@ -202,12 +215,13 @@ public class FilesTransferWithProgress {
      * @throws IOException
      * @throws InterruptedException
      */
-    public void upload(List<InputStream> inStreams, List<Long> inStreamlengths, List<String> remoteFiles,
-	    long totalLength) throws IllegalArgumentException,
-	    InvalidLoginException, FileNotFoundException, UnknownHostException,
-	    ConnectException, SocketException, RemoteException, IOException,
+    public void upload(List<InputStream> inStreams, List<Long> inStreamlengths,
+	    List<String> remoteFiles, long totalLength)
+	    throws IllegalArgumentException, InvalidLoginException,
+	    FileNotFoundException, UnknownHostException, ConnectException,
+	    SocketException, RemoteException, IOException,
 	    InterruptedException {
-	
+
 	if (inStreams == null) {
 	    throw new IllegalArgumentException("files can not be null!");
 	}
@@ -217,31 +231,38 @@ public class FilesTransferWithProgress {
 	}
 
 	// Inside InputStream in inStreams may be null, so no test
-	
+
 	List<OutputStream> outStreams = new ArrayList<OutputStream>();
 
 	try {
 	    for (int i = 0; i < remoteFiles.size(); i++) {
-		OutputStream out = new RemoteOutputStream(remoteSession, 
+		OutputStream out = new RemoteOutputStream(remoteSession,
 			remoteFiles.get(i), inStreamlengths.get(i));
 		outStreams.add(out);
 	    }
 
 	    streamsTransferWithProgressUpload = new StreamsTransferWithProgress(
 		    progress, cancelled);
-	    streamsTransferWithProgressUpload.upload(inStreams, inStreamlengths, outStreams, totalLength);
+	    streamsTransferWithProgressUpload.upload(inStreams, inStreamlengths,
+		    outStreams, totalLength);
 	} finally {
 
 	    // Clean all InputStream in case of Exception inside upload
 	    if (outStreams != null) {
 		for (OutputStream out : outStreams) {
-		    IOUtils.closeQuietly(out);
+		    // IOUtils.closeQuietly(out);
+		    if (out != null) {
+			try {
+			    out.close();
+			} catch (Exception e) {
+			    // e.printStackTrace();
+			}
+		    }
 		}
 	    }
 	}
     }
-    
-    
+
     /**
      * 
      * Uploads a list of files on the remote server.
@@ -284,7 +305,8 @@ public class FilesTransferWithProgress {
 	    }
 
 	    if (!file.exists()) {
-		throw new FileNotFoundException("File does not exists: " + file);
+		throw new FileNotFoundException(
+			"File does not exists: " + file);
 	    }
 	}
 
@@ -292,20 +314,28 @@ public class FilesTransferWithProgress {
 
 	try {
 	    for (int i = 0; i < remoteFiles.size(); i++) {
-		OutputStream out = new RemoteOutputStream(remoteSession, 
+		OutputStream out = new RemoteOutputStream(remoteSession,
 			remoteFiles.get(i), files.get(i).length());
 		outStreams.add(out);
 	    }
 
 	    streamsTransferWithProgressUpload = new StreamsTransferWithProgress(
 		    progress, cancelled);
-	    streamsTransferWithProgressUpload.upload(files, outStreams, totalLength);
+	    streamsTransferWithProgressUpload.upload(files, outStreams,
+		    totalLength);
 	} finally {
 
 	    // Clean all InputStream in case of Exception inside upload
 	    if (outStreams != null) {
 		for (OutputStream out : outStreams) {
-		    IOUtils.closeQuietly(out);
+		    // IOUtils.closeQuietly(out);
+		    if (out != null) {
+			try {
+			    out.close();
+			} catch (Exception e) {
+			    // e.printStackTrace();
+			}
+		    }
 		}
 	    }
 	}
@@ -335,7 +365,8 @@ public class FilesTransferWithProgress {
     public void upload(File file, String remoteFile, long length)
 	    throws IllegalArgumentException, InvalidLoginException,
 	    FileNotFoundException, UnknownHostException, ConnectException,
-	    SocketException, RemoteException, IOException, InterruptedException {
+	    SocketException, RemoteException, IOException,
+	    InterruptedException {
 
 	if (file == null) {
 	    throw new IllegalArgumentException("file can not be null!");

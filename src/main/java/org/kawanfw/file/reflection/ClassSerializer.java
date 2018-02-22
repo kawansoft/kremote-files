@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org.apache.commons.io.IOUtils;
 import org.kawanfw.commons.util.Base64;
 import org.kawanfw.file.api.client.SessionParameters;
 
@@ -72,17 +71,15 @@ public class ClassSerializer<E> {
 	String serializedBase64 = null;
 
 	ByteArrayOutputStream bos = new ByteArrayOutputStream();
-	ObjectOutputStream oos = null;
 
-	try {
-	    oos = new ObjectOutputStream(bos);
+	try (ObjectOutputStream oos = new ObjectOutputStream(bos);){
 	    oos.writeObject(element);
 	    oos.flush();
 	    byte[] byteArray = bos.toByteArray();
 	    serializedBase64 = Base64.byteArrayToBase64(byteArray);
 
 	} finally {
-	    IOUtils.closeQuietly(oos);
+	    //IOUtils.closeQuietly(oos);
 	}
 
 	return serializedBase64;
@@ -116,7 +113,7 @@ public class ClassSerializer<E> {
 	    element = (E) ois.readObject();
 	    return element;
 	} finally {
-	    IOUtils.closeQuietly(ois);
+	    //IOUtils.closeQuietly(ois);
 	}
     }
 

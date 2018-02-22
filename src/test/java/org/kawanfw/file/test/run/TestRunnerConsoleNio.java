@@ -117,7 +117,7 @@ public class TestRunnerConsoleNio {
 	    MessageDisplayer.display("new RemoteSession()...");
 	    RemoteSession remoteSession = null;
 	    
-	    remoteSession = new RemoteSession(TestParms.KREMOTE_FILES_URL_REMOTE,
+	    remoteSession = new RemoteSession(TestParms.KREMOTE_FILES_URL_LOCAL,
 		    TestParms.REMOTE_USER,
 		    TestParms.REMOTE_PASSWORD.toCharArray(), proxy, passwordAuthentication,
 		    sessionParameters);

@@ -46,7 +46,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.logging.Logger;
 
-import org.apache.commons.io.IOUtils;
 import org.kawanfw.commons.util.DefaultParms;
 import org.kawanfw.file.api.client.SessionParameters;
 
@@ -128,12 +127,12 @@ public class MultipartUtility {
 	writer.flush();
 	//outputStream.flush();
 
-	InputStream inputStream = null;
+	//InputStream inputStream = null;
 
-	try {
+	try (InputStream inputStream = new BufferedInputStream(new FileInputStream(uploadFile));){
 	    
 	    int readBufferSize = DefaultParms.DEFAULT_READ_BUFFER_SIZE;	    
-	    inputStream = new BufferedInputStream(new FileInputStream(uploadFile));
+	    
 	    final byte[] buffer = new byte[readBufferSize];
 	    int bytesRead;
 	    while ((bytesRead = inputStream.read(buffer)) != -1) {
@@ -143,7 +142,7 @@ public class MultipartUtility {
 	    
 	    //writer.append(CRLF); // No! will fail by adding it to the uploaded file
 	} finally {
-	    IOUtils.closeQuietly(inputStream);
+	    //IOUtils.closeQuietly(inputStream);
 	}
 
     }

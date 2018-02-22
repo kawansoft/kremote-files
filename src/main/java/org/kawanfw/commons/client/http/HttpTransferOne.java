@@ -47,14 +47,11 @@ import java.net.Proxy;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
-import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.zip.GZIPInputStream;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.kawanfw.commons.util.ClientLogger;
 import org.kawanfw.commons.util.DefaultParms;
 import org.kawanfw.commons.util.FrameworkDebug;
@@ -119,10 +116,10 @@ public class HttpTransferOne implements HttpTransfer {
 
     /** Proxy to use with HttpUrlConnection */
     private Proxy proxy = null;
-    
+
     /** For authenticated proxy */
     private PasswordAuthentication passwordAuthentication = null;
-    	
+
     /**
      * Default constructor.&nbsp;
      * <p>
@@ -132,8 +129,8 @@ public class HttpTransferOne implements HttpTransfer {
      * @param proxy
      *            the proxy to use, may be null for direct access
      * @param passwordAuthentication
-     *            the proxy credentials, null if no proxy or if the proxy does not require
-     *            authentication
+     *            the proxy credentials, null if no proxy or if the proxy does
+     *            not require authentication
      * @param sessionParameters
      *            the http protocol supplementary parameters (may be null for
      *            default settings)
@@ -151,14 +148,13 @@ public class HttpTransferOne implements HttpTransfer {
 	this.passwordAuthentication = passwordAuthentication;
 	this.sessionParameters = sessionParameters;
 
-
 	if (sessionParameters != null) {
 	    this.connectTimeout = sessionParameters.getConnectTimeout();
 	    this.readTimeout = sessionParameters.getReadTimeout();
 
-//	    if (sessionParameters.isAcceptAllSslCertificates()) {
-//		acceptSelfSignedSslCert();
-//	    }
+	    // if (sessionParameters.isAcceptAllSslCertificates()) {
+	    // acceptSelfSignedSslCert();
+	    // }
 	}
 
 	setProxyCredentials();
@@ -196,7 +192,7 @@ public class HttpTransferOne implements HttpTransfer {
 
 	    Authenticator.setDefault(authenticator);
 	}
-	
+
     }
 
     /**
@@ -211,7 +207,7 @@ public class HttpTransferOne implements HttpTransfer {
     public HttpTransferOne(Proxy proxy,
 	    PasswordAuthentication passwordAuthentication,
 	    SessionParameters sessionParameters) {
-	
+
 	this.proxy = proxy;
 	this.passwordAuthentication = passwordAuthentication;
 	this.sessionParameters = sessionParameters;
@@ -301,18 +297,19 @@ public class HttpTransferOne implements HttpTransfer {
 	    conn = buildHttpUrlConnection(theUrl);
 	    conn.setRequestMethod(POST);
 	    conn.setDoOutput(true);
-	    
+
 	    // We need to Html convert & maybe encrypt the parameters
 	    SimpleNameValuePairConvertor simpleNameValuePairConvertor = new SimpleNameValuePairConvertor(
 		    requestParams, sessionParameters);
 	    requestParams = simpleNameValuePairConvertor.convert();
 	    debug("requestParams: " + requestParams);
-	    
-	    TimeoutConnector timeoutConnector = new TimeoutConnector(conn, connectTimeout);
+
+	    TimeoutConnector timeoutConnector = new TimeoutConnector(conn,
+		    connectTimeout);
 	    OutputStream os = timeoutConnector.getOutputStream();
-	     	    
-	    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-		    os, "UTF-8"));
+
+	    BufferedWriter writer = new BufferedWriter(
+		    new OutputStreamWriter(os, "UTF-8"));
 	    writer.write(getPostDataString(requestParams));
 
 	    // writer.flush();
@@ -374,8 +371,9 @@ public class HttpTransferOne implements HttpTransfer {
 	    conn.setRequestMethod(POST);
 	    conn.setDoOutput(true);
 
-	    conn.setChunkedStreamingMode(DefaultParms.DEFAULT_STREAMING_MODE_CHUNKLEN);
-	    
+	    conn.setChunkedStreamingMode(
+		    DefaultParms.DEFAULT_STREAMING_MODE_CHUNKLEN);
+
 	    final MultipartUtility http = new MultipartUtility(theUrl, conn,
 		    sessionParameters);
 
@@ -412,7 +410,6 @@ public class HttpTransferOne implements HttpTransfer {
 	    IOException {
 
 	BufferedReader reader = null;
-	File contentFile = null;
 
 	try {
 
@@ -428,14 +425,16 @@ public class HttpTransferOne implements HttpTransfer {
 	    // it's ok to use a buffered stream with SSL with HttpUrlConnection
 	    // Check the server sent us back a compressed content
 	    if ("gzip".equals(conn.getContentEncoding())) {
-		reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(conn.getInputStream())));
+		reader = new BufferedReader(new InputStreamReader(
+			new GZIPInputStream(conn.getInputStream())));
 	    } else {
-		reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		reader = new BufferedReader(
+			new InputStreamReader(conn.getInputStream()));
 	    }
-	    
+
 	    // line 1: Contains the request status - line 2: Contains the datas
 	    String responseStatus = reader.readLine();
-	    // debug("responseStatus        : " + responseStatus);
+	    // debug("responseStatus : " + responseStatus);
 
 	    if (doReceiveInFile) {
 		// Content is saved back into a file, minus the first line
@@ -462,16 +461,23 @@ public class HttpTransferOne implements HttpTransfer {
 		    if (doReceiveInFile) {
 			bufferedReaderException = new BufferedReader(
 				new FileReader(receiveFile));
-			HttpTransferUtil
-				.throwTheRemoteException(bufferedReaderException);
+			HttpTransferUtil.throwTheRemoteException(
+				bufferedReaderException);
 		    } else {
 			bufferedReaderException = new BufferedReader(
 				new StringReader(m_responseBody));
-			HttpTransferUtil
-				.throwTheRemoteException(bufferedReaderException);
+			HttpTransferUtil.throwTheRemoteException(
+				bufferedReaderException);
 		    }
 		} finally {
-		    IOUtils.closeQuietly(bufferedReaderException);
+		    // IOUtils.closeQuietly(bufferedReaderException);
+
+		    if (bufferedReaderException != null) {
+			try {
+			    bufferedReaderException.close();
+			} catch (Exception e) {
+			}
+		    }
 
 		    if (doReceiveInFile && !DEBUG) {
 			receiveFile.delete();
@@ -482,24 +488,21 @@ public class HttpTransferOne implements HttpTransfer {
 		String message = "The Server response does not start with awaited SEND_OK or SEND_FAILED."
 			+ CR_LF
 			+ "This could be a configuration failure with an URL that does not correspond to a Kawansoft Servlet."
-			+ CR_LF
-			+ "URL: "
-			+ url
-			+ CR_LF
+			+ CR_LF + "URL: " + url + CR_LF
 			+ "This could also be a communication failure. Content of server response: "
 			+ CR_LF;
 
-		message += FileUtils.readFileToString(contentFile, Charset.defaultCharset());
 		throw new IOException(message);
 	    }
 	} finally {
 
-	    IOUtils.closeQuietly(reader);
-
-	    if (!DEBUG) {
-		FileUtils.deleteQuietly(contentFile);
+	    // IOUtils.closeQuietly(reader);
+	    if (reader != null) {
+		try {
+		    reader.close();
+		} catch (Exception e) {
+		}
 	    }
-
 	}
 
     }
@@ -570,10 +573,11 @@ public class HttpTransferOne implements HttpTransfer {
      */
     private void copyResponseIntoFile(BufferedReader bufferedReader, File file)
 	    throws IOException {
-	BufferedOutputStream out = null;
+	// BufferedOutputStream out = null;
 
-	try {
-	    out = new BufferedOutputStream(new FileOutputStream(file));
+	try (BufferedOutputStream out = new BufferedOutputStream(
+		new FileOutputStream(file));) {
+
 	    String line = null;
 	    while ((line = bufferedReader.readLine()) != null) {
 		// All subsequent lines contain the result
@@ -581,7 +585,7 @@ public class HttpTransferOne implements HttpTransfer {
 	    }
 	    out.flush();
 	} finally {
-	    IOUtils.closeQuietly(out);
+	    // IOUtils.closeQuietly(out);
 	}
 
     }
@@ -630,9 +634,10 @@ public class HttpTransferOne implements HttpTransfer {
 
 	debug("requestParams: " + requestParams);
 
-	TimeoutConnector timeoutConnector = new TimeoutConnector(conn, connectTimeout);
+	TimeoutConnector timeoutConnector = new TimeoutConnector(conn,
+		connectTimeout);
 	OutputStream os = timeoutConnector.getOutputStream();
-	    
+
 	Writer writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
 	writer.write(getPostDataString(requestParams));
 
@@ -693,9 +698,8 @@ public class HttpTransferOne implements HttpTransfer {
      *             TransferProgressManager
      */
     @Override
-    public void downloadUrl(URL url, File file)
-	    throws IllegalArgumentException, UnknownHostException,
-	    FileNotFoundException, IOException
+    public void downloadUrl(URL url, File file) throws IllegalArgumentException,
+	    UnknownHostException, FileNotFoundException, IOException
 
     {
 	if (file == null) {
@@ -716,7 +720,7 @@ public class HttpTransferOne implements HttpTransfer {
 
 	    conn = buildHttpUrlConnection(url);
 	    conn.setRequestMethod(GET);
-	    
+
 	    if ("gzip".equals(conn.getContentEncoding())) {
 		in = new GZIPInputStream(conn.getInputStream());
 	    } else {
@@ -731,7 +735,7 @@ public class HttpTransferOne implements HttpTransfer {
 		throw new ConnectException(url + ": Servlet failed: "
 			+ conn.getResponseMessage() + " status: " + statusCode);
 	    }
-	    
+
 	    out = new BufferedOutputStream(new FileOutputStream(file));
 
 	    byte[] buf = new byte[4096];
@@ -757,142 +761,157 @@ public class HttpTransferOne implements HttpTransfer {
 	    }
 
 	} finally {
-	    IOUtils.closeQuietly(out);
-	    IOUtils.closeQuietly(in);
+	    // IOUtils.closeQuietly(out);
+	    // IOUtils.closeQuietly(in);
+
+	    if (in != null) {
+		try {
+		    in.close();
+		} catch (Exception e) {
+		}
+	    }
+
+	    if (out != null) {
+		try {
+		    out.close();
+		} catch (Exception e) {
+		}
+	    }
 	}
 
     }
 
-//    /**
-//     * Create a File from a remote URL.
-//     * 
-//     * @param url
-//     *            the url of the site. Example http://www.yahoo.com
-//     * @param file
-//     *            the file to create from the download.
-//     * 
-//     * @throws IllegalArgumentException
-//     *             if the url or the file is null
-//     * @throws UnknownHostException
-//     *             Host url (http://www.acme.org) does not exists or no Internet
-//     *             Connection.
-//     * 
-//     * @throws IOException
-//     *             For all other IO / Network / System Error
-//     */
-//    @Override
-//    public String getUrlContent(URL url) throws IllegalArgumentException,
-//	    UnknownHostException, IOException
-//
-//    {
-//
-//	if (url == null) {
-//	    throw new IllegalArgumentException("url can not be null!");
-//	}
-//
-//	InputStream in = null;
-//	statusCode = 0; // Reset it!
-//	m_responseBody = null; // Reset it!
-//
-//	try {
-//
-//	    conn = buildHttpUrlConnection(url);
-//	    conn.setRequestMethod(GET);
-//	    
-//	    if ("gzip".equals(conn.getContentEncoding())) {
-//		in = new GZIPInputStream(conn.getInputStream());
-//	    } else {
-//		in = conn.getInputStream();
-//	    }
-//	    
-//	    // Analyze the error after request execution
-//	    statusCode = conn.getResponseCode();
-//
-//	    if (statusCode != HttpURLConnection.HTTP_OK) {
-//		// The server is up, but the servlet is not accessible
-//		throw new ConnectException(url + ": Servlet failed: "
-//			+ conn.getResponseMessage() + " status: " + statusCode);
-//	    }
-//	    
-//	    int writeBufferSize = DefaultParms.DEFAULT_WRITE_BUFFER_SIZE;
-//	    int maxLengthForString = DefaultParms.DEFAULT_MAX_LENGTH_FOR_STRING;
-//	    if (sessionParameters != null) {
-//		maxLengthForString = sessionParameters
-//			.getMaxLengthForString();
-//	    }
-//
-//	    ByteArrayOutputStream out = new ByteArrayOutputStream();
-//	    byte[] buf = new byte[writeBufferSize];
-//	    int len = 0;
-//	    int totalLen = 0;
-//	    while ((len = in.read(buf)) > 0) {
-//		totalLen += len;
-//
-//		if (totalLen > maxLengthForString) {
-//		    throw new IOException(
-//			    "URL content is too big for download into a String. "
-//				    + "Maximum length authorized is: "
-//				    + maxLengthForString);
-//		}
-//
-//		out.write(buf, 0, len);
-//	    }
-//
-//	    String content = new String(out.toByteArray());
-//	    return content;
-//
-//	} finally {
-//	    IOUtils.closeQuietly(in);
-//	}
-//
-//    }
+    // /**
+    // * Create a File from a remote URL.
+    // *
+    // * @param url
+    // * the url of the site. Example http://www.yahoo.com
+    // * @param file
+    // * the file to create from the download.
+    // *
+    // * @throws IllegalArgumentException
+    // * if the url or the file is null
+    // * @throws UnknownHostException
+    // * Host url (http://www.acme.org) does not exists or no Internet
+    // * Connection.
+    // *
+    // * @throws IOException
+    // * For all other IO / Network / System Error
+    // */
+    // @Override
+    // public String getUrlContent(URL url) throws IllegalArgumentException,
+    // UnknownHostException, IOException
+    //
+    // {
+    //
+    // if (url == null) {
+    // throw new IllegalArgumentException("url can not be null!");
+    // }
+    //
+    // InputStream in = null;
+    // statusCode = 0; // Reset it!
+    // m_responseBody = null; // Reset it!
+    //
+    // try {
+    //
+    // conn = buildHttpUrlConnection(url);
+    // conn.setRequestMethod(GET);
+    //
+    // if ("gzip".equals(conn.getContentEncoding())) {
+    // in = new GZIPInputStream(conn.getInputStream());
+    // } else {
+    // in = conn.getInputStream();
+    // }
+    //
+    // // Analyze the error after request execution
+    // statusCode = conn.getResponseCode();
+    //
+    // if (statusCode != HttpURLConnection.HTTP_OK) {
+    // // The server is up, but the servlet is not accessible
+    // throw new ConnectException(url + ": Servlet failed: "
+    // + conn.getResponseMessage() + " status: " + statusCode);
+    // }
+    //
+    // int writeBufferSize = DefaultParms.DEFAULT_WRITE_BUFFER_SIZE;
+    // int maxLengthForString = DefaultParms.DEFAULT_MAX_LENGTH_FOR_STRING;
+    // if (sessionParameters != null) {
+    // maxLengthForString = sessionParameters
+    // .getMaxLengthForString();
+    // }
+    //
+    // ByteArrayOutputStream out = new ByteArrayOutputStream();
+    // byte[] buf = new byte[writeBufferSize];
+    // int len = 0;
+    // int totalLen = 0;
+    // while ((len = in.read(buf)) > 0) {
+    // totalLen += len;
+    //
+    // if (totalLen > maxLengthForString) {
+    // throw new IOException(
+    // "URL content is too big for download into a String. "
+    // + "Maximum length authorized is: "
+    // + maxLengthForString);
+    // }
+    //
+    // out.write(buf, 0, len);
+    // }
+    //
+    // String content = new String(out.toByteArray());
+    // return content;
+    //
+    // } finally {
+    // IOUtils.closeQuietly(in);
+    // }
+    //
+    // }
 
-//    /**
-//     * If called, self signed SSL certificates will be accepted
-//     */
-//    private void acceptSelfSignedSslCert() {
-//	// Create a trust manager that does not validate certificate chains
-//	TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-//	    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-//		return null;
-//	    }
-//
-//	    public void checkClientTrusted(X509Certificate[] certs,
-//		    String authType) {
-//	    }
-//
-//	    public void checkServerTrusted(X509Certificate[] certs,
-//		    String authType) {
-//	    }
-//	} };
-//
-//	// Install the all-trusting trust manager
-//	SSLContext sc = null;
-//	try {
-//	    sc = SSLContext.getInstance("SSL");
-//
-//	    sc.init(null, trustAllCerts, new java.security.SecureRandom());
-//
-//	    HttpsURLConnection
-//		    .setDefaultSSLSocketFactory(sc.getSocketFactory());
-//
-//	    // Create all-trusting host name verifier
-//	    HostnameVerifier allHostsValid = new HostnameVerifier() {
-//		public boolean verify(String hostname, SSLSession session) {
-//		    return true;
-//		}
-//	    };
-//
-//	    // Install the all-trusting host verifier
-//	    HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-//
-//	} catch (NoSuchAlgorithmException e) {
-//	    e.printStackTrace();
-//	} catch (KeyManagementException e) {
-//	    e.printStackTrace();
-//	}
-//
-//    }
+    // /**
+    // * If called, self signed SSL certificates will be accepted
+    // */
+    // private void acceptSelfSignedSslCert() {
+    // // Create a trust manager that does not validate certificate chains
+    // TrustManager[] trustAllCerts = new TrustManager[] { new
+    // X509TrustManager() {
+    // public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+    // return null;
+    // }
+    //
+    // public void checkClientTrusted(X509Certificate[] certs,
+    // String authType) {
+    // }
+    //
+    // public void checkServerTrusted(X509Certificate[] certs,
+    // String authType) {
+    // }
+    // } };
+    //
+    // // Install the all-trusting trust manager
+    // SSLContext sc = null;
+    // try {
+    // sc = SSLContext.getInstance("SSL");
+    //
+    // sc.init(null, trustAllCerts, new java.security.SecureRandom());
+    //
+    // HttpsURLConnection
+    // .setDefaultSSLSocketFactory(sc.getSocketFactory());
+    //
+    // // Create all-trusting host name verifier
+    // HostnameVerifier allHostsValid = new HostnameVerifier() {
+    // public boolean verify(String hostname, SSLSession session) {
+    // return true;
+    // }
+    // };
+    //
+    // // Install the all-trusting host verifier
+    // HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+    //
+    // } catch (NoSuchAlgorithmException e) {
+    // e.printStackTrace();
+    // } catch (KeyManagementException e) {
+    // e.printStackTrace();
+    // }
+    //
+    // }
 
     /**
      * displays a message if no proxu used
