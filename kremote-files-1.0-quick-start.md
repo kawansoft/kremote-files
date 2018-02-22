@@ -33,7 +33,7 @@ We use a desktop environment only for this Quick Start Guide.
 
 ## Development Environment
 
-[*Download*](http://www.kremote-files.com/download) and unzip `kremote-files-1.0-bin.zip` or download and untar `kremote-files-1.0-bin.tar.gz`.
+[*Download*](https://github.com/kawansoft/kremote-files/releases/tag/v1.0) and unzip `kremote-files-1.0-bin.zip` or download and untar `kremote-files-1.0-bin.tar.gz`.
 
 Add the jar libraries of the `/lib` subdirectory to your IDE project or development CLASSPATH.
 
