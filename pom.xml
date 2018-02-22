@@ -50,13 +50,12 @@
   	<url>http://www.kawansoft.com</url>
   </organization>
   <url>https://www.kremote-files.com</url>
-  <description>KRemote Files is a secure Open Source framework that allows to program very easily file uploads/downloads, remote file access and RPC through HTTP
-File transfers include powerful features like file chunking and automatic 
-recovery mechanism.</description>
   <inceptionYear>January 2018</inceptionYear>
   <artifactId>kremote-files</artifactId>
   <scm>
   	<url>https://github.com/kawansoft/kremote-files</url>
   	<developerConnection>https://github.com/kawansoft/kremote-files</developerConnection>
   </scm>
+  <description>KRemote Files is a secure Open Source framework that allows to program very easily file uploads/downloads, remote file access, and RPC through HTTP
+File transfers include powerful features like file chunking and automatic recovery mechanism.</description>
 </project>
