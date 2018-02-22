@@ -82,7 +82,7 @@ We first create a `RemoteSession` that establishes a link with the KRremote File
 		password);
 ```
 
-We can now create a `RemotFile` and use it as if it were a `java.io.File`:
+We can now create a `RemoteFile` and use it as if it were a `java.io.File`:
 
 ```java
 	// Display info on our remote /mydir/Koala.jpg
