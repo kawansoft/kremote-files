@@ -101,7 +101,7 @@ We display the files located in remote directories with `RemoteFile.listFiles(`)
 	RemoteFile remoteDir = new RemoteFile(remoteSession, "/mydir");
 	RemoteFile[] remoteFiles = remoteDir.listFiles();
 	System.out.println();
-	System.out.println("All files located in " + remoteDir + "     : "
+	System.out.println("All files located in " + remoteDir + ": "
 		+ Arrays.asList(remoteFiles));
 ```
 
