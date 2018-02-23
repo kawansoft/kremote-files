@@ -201,7 +201,7 @@ public class Calculator implements ClientCallable {
 
 The `ClientCallable` interface is a marker interface that indicates to KRemote Files server that `Calculator`class is callable only  by valid and authenticated users.
 
-We use `RemoteSession.call` method to call the `add` method from client side.:
+We use `RemoteSession.call` method to call the `add` method from client side:
 
 ```java
 	String resultStr = remoteSession
