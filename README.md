@@ -150,8 +150,8 @@ Download is as straightforward, we use a `RemoteInputStream` which implements a 
 ```java
 	File file = new File(userHome + "Tulips.jpg");
 
-	// Get an InputStream from the file located on our server and
-	// an OutputSream from our local file
+    // Get an InputStream from the file located on our server and
+	// an OutputStream from our local file
 	try (InputStream in = new RemoteInputStream(remoteSession,
 		"/mydir/Tulips.jpg");
 		OutputStream out = new BufferedOutputStream(
@@ -204,7 +204,7 @@ The `ClientCallable` interface is a marker interface that indicates to KRemote F
 We use `RemoteSession.call` method to call the `add` method from client side:
 
 ```java
-	String resultStr = remoteSession
+    String resultStr = remoteSession
 		.call("com.kremotefiles.quickstart.Calculator.add", 41, 42);
 	int result = Integer.parseInt(resultStr);
 
