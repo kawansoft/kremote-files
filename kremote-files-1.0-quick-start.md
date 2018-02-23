@@ -236,7 +236,7 @@ This default server configuration is of course modifiable.
 
 # From now on…
 
-You can read the [*User Guide*](http://www.kremote-files.org/soft/1.0/kremote-files-1.0-user-guide.md) or run through the *[Javadoc](http://www.kremote-files.com/soft/1.0/javadoc)*.
+You can read the [*User Guide*](https://github.com/kawansoft/kremote-files/blob/master/README.md) or run through the *[Javadoc](http://www.kremote-files.com/soft/1.0/javadoc)*.
 
 -   How to configure the KRemote Files Server to set the location of the user files on the server.
 
