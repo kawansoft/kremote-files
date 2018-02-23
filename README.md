@@ -697,15 +697,15 @@ When using `java.io.FilenameFilter` and `java.io.FileFilter` filters, the filter
 
 **Table of Exceptions thrown by RemoteFile methods**
 
-| **Exception **                           | **Signification**                        |
-| ---------------------------------------- | ---------------------------------------- |
-| java.net.UnknownHostException            | There is  no more Internet connection.   |
-| [InvalidLoginException](http://www.kremote-files.com/soft/1.0/javadoc/org/kawanfw/file/api/client/exception/InvalidLoginException.html) | The `RemoteSession` has been closed.     |
-| java.net.ConnectException                | The HTTP Request returned a Http Status Code  != OK (200).  Use `RemoteSession.getHttpStatusCode()` to retrieve the Status Code. |
-| java.net.SocketException                 | Network failure during transmission.     |
-| java.lang.SecurityException              | The remote `java.io.File` throwed a   `java.lang.SecurityException`. |
-| [RemoteException](http://www.kremote-files.com/soft/1.0/javadoc/org/kawanfw/file/api/client/exception/RemoteException.html) | The remote `java.io.File` throwed an Exception. |
-| java.io.IOException                      | For all other IO / Network / System Error. |
+| Exception                                                    | **Signification**                                            |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| java.net.UnknownHostException                                | There is  no more Internet connection.                       |
+| [InvalidLoginException](http://www.kremote-files.com/soft/1.0/javadoc/org/kawanfw/file/api/client/exception/InvalidLoginException.html) | The `RemoteSession` has been closed.                         |
+| java.net.ConnectException                                    | The HTTP Request returned a Http Status Code  != OK (200).  Use `RemoteSession.getHttpStatusCode()` to retrieve the Status Code. |
+| java.net.SocketException                                     | Network failure during transmission.                         |
+| java.lang.SecurityException                                  | The remote `java.io.File` throwed a   `java.lang.SecurityException`. |
+| [RemoteException](http://www.kremote-files.com/soft/1.0/javadoc/org/kawanfw/file/api/client/exception/RemoteException.html) | The remote `java.io.File` throwed an Exception.              |
+| java.io.IOException                                          | For all other IO / Network / System Error.                   |
 
 ### Example of RemoteFile usage
 
