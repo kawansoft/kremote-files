@@ -6,13 +6,13 @@
       * [What is KRemote Files?](#what-is-kremote-files)
          * [Accessing remote files](#accessing-remote-files)
          * [Files upload and download](#files-upload-and-download)
-         * [Secure RPC Calls](#secure-rpc-calls)
+         * [Secure RPC calls](#secure-rpc-calls)
       * [Architecture](#architecture)
       * [Features](#features)
       * [Requirements](#requirements)
       * [License](#license)
    * [Installation](#installation)
-      * [Server Installation](#server-installation)
+      * [Server installation](#server-installation)
       * [Client installation (including Android)](#client-installation-including-android)
          * [Android Project settings](#android-project-settings)
    * [Configuration on the server side](#configuration-on-the-server-side)
@@ -170,7 +170,7 @@ Download is as straightforward, we use a `RemoteInputStream` which implements a 
 		"/mydir/Tulips.jpgs uccessfully downloaded to " + file);
 ```
 
-### Secure RPC Calls
+### Secure RPC calls
 
 KRemote Files include a simple to use RPC mechanism,  without stubbing, code generation, XML or JSON.  It is secured so that only authenticated users can call remote Java methods. 
 
@@ -258,7 +258,7 @@ KRemote Files is licensed through the GNU Lesser General Public License (LGPL v2
 
 [Download](https://github.com/kawansoft/kremote-files/releases/tag/v1.0) and unzip `kremote-files-1.0-bin.zip` or download and untar `kremote-files-1.0-bin.tar.gz`.
 
-## Server Installation
+## Server installation
 
 Add the jars of the `/lib` subdirectory to your Servlet container webapp library folder.  (Typically in `/WEB-INF/lib`).
 
