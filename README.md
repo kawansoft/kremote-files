@@ -340,11 +340,11 @@ The second type of Configurator is `SessionConfigurator`. There is no setup requ
 
 **Note that KRemote Files comes with Default Configurator classes:**
 
-**it’s not required to write your own  Configurator **
+**it’s not required to write your own  Configurator**
 
 **(in case you only want to test KRemote Files, etc.).**
 
-**See the **[Quick Start](https://github.com/kawansoft/kremote-files/blob/master/kremote-files-1.0-quick-start.md).
+**See the** [Quick Start](https://github.com/kawansoft/kremote-files/blob/master/kremote-files-1.0-quick-start.md).
 
 ## FileConfigurator interface
 
