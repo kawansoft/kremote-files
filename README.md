@@ -592,15 +592,15 @@ Communication via an (authenticating) proxy server is done using a `java.net.Pro
 
 **Table of Exceptions thrown by RemoteSession methods**
 
-| **Exception **                           | **Signification**                        |
-| ---------------------------------------- | ---------------------------------------- |
-| java.net.UnknownHostException            | The URL is malformed.                    |
+| **Exception**                                                | **Signification**                                            |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| java.net.UnknownHostException                                | The URL is malformed.                                        |
 | [InvalidLoginException](http://www.kremote-files.com/soft/1.0/javadoc/org/kawanfw/file/api/client/exception/InvalidLoginException.html) | The (username, password) authentication  failed on the remote KRemote Files Manager.  (The implemented `File.Configurator.login` method returned false). |
-| java.net.UnknownHostException            | There is no Internet connection. There is an error in HTTP address in the `url` parameter. |
-| java.net.ConnectException                | The HTTP Request returned a HTTP Status Code  != OK (200).   Use `RemoteSession.getHttpStatusCode()` to retrieve the Status Code. |
-| java.net.SocketException                 | Network failure during transmission.     |
+| java.net.UnknownHostException                                | There is no Internet connection. There is an error in HTTP address in the `url` parameter. |
+| java.net.ConnectException                                    | The HTTP Request returned a HTTP Status Code  != OK (200).   Use `RemoteSession.getHttpStatusCode()` to retrieve the Status Code. |
+| java.net.SocketException                                     | Network failure during transmission.                         |
 | [RemoteException](http://www.kremote-files.com/soft/1.0/javadoc/org/kawanfw/file/api/client/exception/RemoteException.html) | An unexpected Exception has been thrown by  the server. <br />Signals KRemote Files product failure. |
-| java.io.IOException                      | For all other IO / Network / System Error. |
+| java.io.IOException                                          | For all other IO / Network / System Error.                   |
 
 ### RPC: Calling Java methods on the KRemote Files Server
 
