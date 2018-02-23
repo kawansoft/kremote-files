@@ -107,31 +107,31 @@ We display the files located in remote directories with `RemoteFile.listFiles(`)
 
 ### Files upload and download
 
-We want now to upload a new file to remote `my_dir`. We simply use a `RemoteOutputStream` which implements a `java.io.OutputStream` :
+We want now to upload a new file to remote `mydir`. We simply use a `RemoteOutputStream` which implements a `java.io.OutputStream` :
 
 ```java
-	// Upload user.home/Koala.jpg to remote directory /mydir
+	// Upload user.home/Tulips.jpg to remote directory /mydir
 	String userHome = System.getProperty("user.home") + File.separator;
-	File file = new File(userHome + "Koala.jpg");
+	File file = new File(userHome + "Tulips.jpg");
 
 	Path path = file.toPath();
 	try (OutputStream outputStream = new RemoteOutputStream(remoteSession,
-		"/mydir/Koala.jpg");) {
+		"/mydir/Tulips.jpg");) {
 	    Files.copy(path, outputStream);
 	}
 
 	System.out.println(file + " successfully uploaded!"); 
 ```
 
-We have of course a complete access to all `OutputStream` methods; this will be helpful if we want to create a nice progress indicator for our users. This is the same `Koala.jpg` upload with alternate syntax using only stream methods:
+We have of course a complete access to all `OutputStream` methods; this will be helpful if we want to create a nice progress indicator for our users. This is the same `Tulips.jpg` upload with alternate syntax using only stream methods:
 
 ```java
-	File file = new File(userHome + "Koala.jpg");
+	File file = new File(userHome + "Tulips.jpg");
 
 	try (InputStream in = new BufferedInputStream(
 		new FileInputStream(file));
 		OutputStream out = new RemoteOutputStream(remoteSession,
-			"/mydir/Koala.jpg")) {
+			"/mydir/Tulips.jpg")) {
 
 	    // Create the remote file reading the InpuStream and writing
 	    // on the OutputStream
