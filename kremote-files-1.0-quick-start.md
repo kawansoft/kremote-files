@@ -3,12 +3,12 @@
 # KRemote Files v1.0 - Quick Start Guide
 <img src="https://www.aceql.com/favicon.png" alt="AceQ HTTP Icon"/>
 
-   * [Development Environment](#development-environment)
-   * [Server Side Settings](#server-side-settings)
+* [Installation](#installation)
+  * [Requirements](#requirements)
+  * [Development Environment](#development-environment)
+* [Server Side Settings](#server-side-settings)
    * [Client Side Settings](#client-side-settings)
    * [From now on…](#from-now-on)
-
-
 
 # Installation
 
