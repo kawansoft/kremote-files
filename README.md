@@ -22,7 +22,7 @@
       * [FileConfigurator interface](#fileconfigurator-interface)
       * [Coding a FileConfigurator](#coding-a-fileconfigurator)
          * [Login method: authenticating client username and password](#login-method-authenticating-client-username-and-password)
-         * [getHomeDir method:  Defining the user files locations](#gethomedir-method--defining-the-user-files-locations)
+         * [getHomeDir method:  defining the user files locations](#gethomedir-method--defining-the-user-files-locations)
          * [getLogger method: defining where server Exceptions are stored](#getlogger-method-defining-where-server-exceptions-are-stored)
       * [Passing concrete Configurator classes](#passing-concrete-configurator-classes)
          * [The jwt_secret_value init parameter](#the-jwt_secret_value-init-parameter)
@@ -437,7 +437,7 @@ The included [SshAuthFileConfigurator](http://www.kremote-files.com/soft/1.0/jav
 
 It allows zero-code client (username, password) authentication using SSH.
 
-### getHomeDir method:  Defining the user files locations
+### getHomeDir method:  defining the user files locations
 
 `getHomeDir` allows to define the home directory for each client user, aka where the users files will be stored when uploaded.
 
