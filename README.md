@@ -190,7 +190,7 @@ public class Calculator implements ClientCallable {
     /**
      * Constructor
      */
-    public Calculator()
+    public Calculator() {
     }
 
     public int add(int a, int b) {
