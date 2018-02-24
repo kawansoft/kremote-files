@@ -73,7 +73,7 @@ We first create a `RemoteSession` that establishes a link with the KRremote File
 
 ```Java
 	// Parameters for connection to our remote server
-	String url = "http://localhost:8080/kremote-files/ServerFileManager";
+	String url = "https://www.acme.com/ServerFileManager";
 	String username = "username";
 	char[] password = { 'd', 'e', 'm', 'o' };
 
