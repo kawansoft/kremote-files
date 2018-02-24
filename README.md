@@ -166,7 +166,7 @@ package com.kremotefiles.quickstart;
 import org.kawanfw.file.api.server.ClientCallable;
 
 /**
- * Simple calculator to be called from the client side. 
+ * A simple calculator to be called from the client side. 
  * Requires the client to be authenticated.
  */
 public class Calculator implements ClientCallable {
