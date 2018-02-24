@@ -150,8 +150,6 @@ Download is as straightforward, we use a `RemoteInputStream` which implements a 
 ```java
 	File file = new File(userHome + "Tulips.jpg");
 
-    // Get an InputStream from the file located on our server and
-	// an OutputStream from our local file
 	try (InputStream in = new RemoteInputStream(remoteSession,
 		"/mydir/Tulips.jpg");
 		OutputStream out = new BufferedOutputStream(
