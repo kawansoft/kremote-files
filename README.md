@@ -119,8 +119,6 @@ We want now to upload a new file to remote `mydir`. We simply use a `RemoteOutpu
 		"/mydir/Tulips.jpg");) {
 	    Files.copy(path, outputStream);
 	}
-
-	System.out.println(file + " successfully uploaded!"); 
 ```
 
 We have of course a complete access to all `OutputStream` methods; this will be helpful if we want to create a nice progress indicator for our users. This is the same `Tulips.jpg` upload with alternate syntax using only stream methods:
@@ -132,17 +130,12 @@ We have of course a complete access to all `OutputStream` methods; this will be 
 		new FileInputStream(file));
 		OutputStream out = new RemoteOutputStream(remoteSession,
 			"/mydir/Tulips.jpg")) {
-
-	    // Create the remote file reading the InpuStream and writing
-	    // on the OutputStream
 	    byte[] buffer = new byte[4096];
 	    int n = 0;
 	    while ((n = in.read(buffer)) != -1) {
 		    out.write(buffer, 0, n);
 	    }
 	}
-
-	System.out.println(file + " successfully uploaded!"); 
 ```
 
 Download is as straightforward, we use a `RemoteInputStream` which implements a `java.io.InputStream` :
@@ -154,18 +147,12 @@ Download is as straightforward, we use a `RemoteInputStream` which implements a 
 		"/mydir/Tulips.jpg");
 		OutputStream out = new BufferedOutputStream(
 			new FileOutputStream(file));) {
-
-	    // Download the remote file reading
-	    // the InpuStream and save it to our local file
 	    byte[] buffer = new byte[4096];
 	    int n = 0;
 	    while ((n = in.read(buffer)) != -1) {
 	        out.write(buffer, 0, n);
 	    }
 	}
-
-	System.out.println(
-		"/mydir/Tulips.jpgs uccessfully downloaded to " + file);
 ```
 
 ### Secure RPC calls
@@ -182,12 +169,8 @@ import org.kawanfw.file.api.server.ClientCallable;
  * Simple calculator to be called from the client side. 
  * Requires the client to be authenticated.
  */
-
 public class Calculator implements ClientCallable {
 
-    /**
-     * Constructor
-     */
     public Calculator() {
     }
 
@@ -203,7 +186,7 @@ We use `RemoteSession.call` method to call the `add` method from client side:
 
 ```java
     String resultStr = remoteSession
-		.call("com.kremotefiles.quickstart.Calculator.add", 41, 42);
+		.call("com.kremotefiles.quickstart.Calculator.add", 20, 22);
 	int result = Integer.parseInt(resultStr);
 
 	System.out.println("Result: " + result);
