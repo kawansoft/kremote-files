@@ -186,10 +186,10 @@ We use `RemoteSession.call` method to call the `add` method from client side:
 
 ```java
     String resultStr = remoteSession
-		.call("com.kremotefiles.quickstart.Calculator.add", 20, 22);
-	int result = Integer.parseInt(resultStr);
+        .call("com.kremotefiles.quickstart.Calculator.add", 20, 22);
+    int result = Integer.parseInt(resultStr);
 
-	System.out.println("Result: " + result);
+    System.out.println("Result: " + result);
 ```
 
 ## Architecture
