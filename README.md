@@ -442,8 +442,8 @@ The `FileConfiguratorClassName` parameter lets you define your `FileConfigurator
 
 ```xml
 <servlet>
-	<servlet-name>ServerFileManager</servlet-name>
-	<servlet-class>org.kawanfw.file.servlet.ServerFileManager</servlet-class>
+    <servlet-name>ServerFileManager</servlet-name>
+    <servlet-class>org.kawanfw.file.servlet.ServerFileManager</servlet-class>
   
         <init-param>        
             <param-name>fileConfiguratorClassName</param-name>
@@ -455,12 +455,12 @@ The `FileConfiguratorClassName` parameter lets you define your `FileConfigurator
             <param-value>MySecretValue</param-value>
         </init-param>
   
-	    <load-on-startup>1</load-on-startup>
+        <load-on-startup>1</load-on-startup>
 </servlet>
 
 <servlet-mapping>
-	<servlet-name>ServerFileManager</servlet-name>
-	<url-pattern>ServerFileManager</url-pattern>
+    <servlet-name>ServerFileManager</servlet-name>
+    <url-pattern>ServerFileManager</url-pattern>
 </servlet-mapping>
 ```
 
@@ -1017,18 +1017,18 @@ There is some configuration on the server side: a second Server File Manager ser
 
 ```xml
 <servlet>
-	<servlet-name>ServerFileManager2</servlet-name>
-	<servlet-class>org.kawanfw.file.servlet.ServerFileManager</servlet-class>
+    <servlet-name>ServerFileManager2</servlet-name>
+    <servlet-class>org.kawanfw.file.servlet.ServerFileManager</servlet-class>
 
-	<init-param>
-		<param-name>FileConfiguratorClassName</param-name>
-		<param-value>org.acme.config.MyFileConfigurator2</param-value>
-	</init-param>
+    <init-param>
+        <param-name>FileConfiguratorClassName</param-name>
+        <param-value>org.acme.config.MyFileConfigurator2</param-value>
+    </init-param>
 </servlet>
 
 <servlet-mapping>
-	<servlet-name>ServerFileManager2</servlet-name>
-	<url-pattern>ServerFileManager2</url-pattern>
+    <servlet-name>ServerFileManager2</servlet-name>
+    <url-pattern>ServerFileManager2</url-pattern>
 </servlet-mapping>
 ```
 
