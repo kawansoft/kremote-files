@@ -72,37 +72,37 @@ KRemote Files is a secure Open Source client/server framework that allows to pro
 We first create a `RemoteSession` that establishes a link with the KRremote Files server:
 
 ```Java
-	// Parameters for connection to our remote server
-	String url = "https://www.acme.com/ServerFileManager";
-	String username = "username";
-	char[] password = { 'd', 'e', 'm', 'o' };
+// Parameters for connection to our remote server
+String url = "https://www.acme.com/ServerFileManager";
+String username = "username";
+char[] password = { 'd', 'e', 'm', 'o' };
 
-	// Establish a session with the remote server
-	RemoteSession remoteSession = new RemoteSession(url, username,
-		password);
+// Establish a session with the remote server
+RemoteSession remoteSession = new RemoteSession(url, username,
+	password);
 ```
 
 We can now create a `RemoteFile` and use it as if it were a `java.io.File`:
 
 ```java
-	// Display info on our remote /mydir/Koala.jpg
-	RemoteFile koala = new RemoteFile(remoteSession, "/mydir/Koala.jpg");
+// Display info on our remote /mydir/Koala.jpg
+RemoteFile koala = new RemoteFile(remoteSession, "/mydir/Koala.jpg");
 
-	System.out.println("Display remote " + koala + " info...");
-	System.out.println("last modified: " + new Date(koala.lastModified()));
-	System.out.println("length       : " + koala.length());
-	System.out.println("Parent       : " + koala.getParent());
+System.out.println("Display remote " + koala + " info...");
+System.out.println("last modified: " + new Date(koala.lastModified()));
+System.out.println("length       : " + koala.length());
+System.out.println("Parent       : " + koala.getParent());
 ```
 
 We display the files located in remote directories with `RemoteFile.listFiles(`), which acts as `java.io.File.listFiles()` method:
 
 ```java
-	// List all files located in remote directory /mydir
-	RemoteFile remoteDir = new RemoteFile(remoteSession, "/mydir");
-	RemoteFile[] remoteFiles = remoteDir.listFiles();
-	System.out.println();
-	System.out.println("All files located in " + remoteDir + ": "
-		+ Arrays.asList(remoteFiles));
+// List all files located in remote directory /mydir
+RemoteFile remoteDir = new RemoteFile(remoteSession, "/mydir");
+RemoteFile[] remoteFiles = remoteDir.listFiles();
+System.out.println();
+System.out.println("All files located in " + remoteDir + ": "
+	+ Arrays.asList(remoteFiles));
 ```
 
 ### Files upload and download
@@ -110,49 +110,49 @@ We display the files located in remote directories with `RemoteFile.listFiles(`)
 We want now to upload a new file to remote `mydir`. We simply use a `RemoteOutputStream` which implements a `java.io.OutputStream` :
 
 ```java
-	// Upload user.home/Tulips.jpg to remote directory /mydir
-	String userHome = System.getProperty("user.home") + File.separator;
-	File file = new File(userHome + "Tulips.jpg");
+// Upload user.home/Tulips.jpg to remote directory /mydir
+String userHome = System.getProperty("user.home") + File.separator;
+File file = new File(userHome + "Tulips.jpg");
 
-	Path path = file.toPath();
-	try (OutputStream outputStream = new RemoteOutputStream(remoteSession,
-		"/mydir/Tulips.jpg");) {
-	    Files.copy(path, outputStream);
-	}
+Path path = file.toPath();
+try (OutputStream outputStream = new RemoteOutputStream(remoteSession,
+     	"/mydir/Tulips.jpg");) {
+    Files.copy(path, outputStream);
+}
 ```
 
 We have of course a complete access to all `OutputStream` methods; this will be helpful if we want to create a nice progress indicator for our users. This is the same `Tulips.jpg` upload with alternate syntax using only stream methods:
 
 ```java
-	File file = new File(userHome + "Tulips.jpg");
+File file = new File(userHome + "Tulips.jpg");
 
-	try (InputStream in = new BufferedInputStream(
-		new FileInputStream(file));
-		OutputStream out = new RemoteOutputStream(remoteSession,
-			"/mydir/Tulips.jpg")) {
-	    byte[] buffer = new byte[4096];
-	    int n = 0;
-	    while ((n = in.read(buffer)) != -1) {
-		    out.write(buffer, 0, n);
-	    }
-	}
+try (InputStream in = new BufferedInputStream(
+    new FileInputStream(file));
+     OutputStream out = new RemoteOutputStream(remoteSession,
+		"/mydir/Tulips.jpg")) {
+    byte[] buffer = new byte[4096];
+    int n = 0;
+    while ((n = in.read(buffer)) != -1) {
+        out.write(buffer, 0, n);
+    }
+}
 ```
 
 Download is as straightforward, we use a `RemoteInputStream` which implements a `java.io.InputStream` :
 
 ```java
-	File file = new File(userHome + "Tulips.jpg");
+File file = new File(userHome + "Tulips.jpg");
 
-	try (InputStream in = new RemoteInputStream(remoteSession,
+try (InputStream in = new RemoteInputStream(remoteSession,
 		"/mydir/Tulips.jpg");
-		OutputStream out = new BufferedOutputStream(
-			new FileOutputStream(file));) {
-	    byte[] buffer = new byte[4096];
-	    int n = 0;
-	    while ((n = in.read(buffer)) != -1) {
-	        out.write(buffer, 0, n);
-	    }
-	}
+     OutputStream out = new BufferedOutputStream(
+         new FileOutputStream(file));) {
+    byte[] buffer = new byte[4096];
+    int n = 0;
+    while ((n = in.read(buffer)) != -1) {
+        out.write(buffer, 0, n);
+    }
+}
 ```
 
 ### Secure RPC calls
@@ -185,11 +185,11 @@ The `ClientCallable` interface is a marker interface that indicates to KRemote F
 We use `RemoteSession.call` method to call the `add` method from client side:
 
 ```java
-    String resultStr = remoteSession
+String resultStr = remoteSession
         .call("com.kremotefiles.quickstart.Calculator.add", 20, 22);
-    int result = Integer.parseInt(resultStr);
+int result = Integer.parseInt(resultStr);
 
-    System.out.println("Result: " + result);
+System.out.println("Result: " + result);
 ```
 
 ## Architecture
@@ -246,9 +246,9 @@ Add the jars of the `/lib` subdirectory to your Servlet container webapp library
 Create a “Server” project and add the jars of the `/lib` subdirectory to your development `CLASSPATH`, or for Maven users:
 
 ```xml
-  <groupId>com.remote-files</groupId>
-  <artifactId>kremote-files</artifactId>
-  <version>1.0</version>
+<groupId>com.remote-files</groupId>
+<artifactId>kremote-files</artifactId>
+<version>1.0</version>
 ```
 
 ## Client installation (including Android)
@@ -256,9 +256,9 @@ Create a “Server” project and add the jars of the `/lib` subdirectory to you
 Create a “Client” project and add to your development `CLASSPATH` the path to the jars located in the `/lib` subdirectory of your installation folder, or for Maven users:
 
 ```xml
-  <groupId>com.remote-files</groupId>
-  <artifactId>kremote-files</artifactId>
-  <version>1.0</version>
+<groupId>com.remote-files</groupId>
+<artifactId>kremote-files</artifactId>
+<version>1.0</version>
 ```
 
 ### Android Project settings
@@ -297,15 +297,15 @@ Add the Server File Manager servlet to your `web.xml`:
 
 ```xml
 <servlet>
-	<servlet-name>ServerFileManager</servlet-name>
-	<servlet-class>org.kawanfw.file.servlet.ServerFileManager</servlet-class>
-  
-	<load-on-startup>1</load-on-startup>
+    <servlet-name>ServerFileManager</servlet-name>
+    <servlet-class>org.kawanfw.file.servlet.ServerFileManager</servlet-class>
+
+    <load-on-startup>1</load-on-startup>
 </servlet>
 
 <servlet-mapping>
-	<servlet-name>ServerFileManager</servlet-name>
-	<url-pattern>ServerFileManager</url-pattern>
+    <servlet-name>ServerFileManager</servlet-name>
+    <url-pattern>ServerFileManager</url-pattern>
 </servlet-mapping>
 ```
 
@@ -356,60 +356,60 @@ The username and password should be checked against an  applicative access mecha
 The following example will check that the username and password passed by the client match an access list defined in a SQL table of your host  database:
 
 ```java
-    /**
-     * Our own Acme Company authentication of remote client users. This methods
-     * overrides the {@code DefaultFileConfigurator.login} method. <br>
-     * The (username, password) values are checked against the user_login table.
-     * 
-     * @param username
-     *            the username sent by client side
-     * @param password
-     *            the user password sent by client side
-     * @param iPAddress
-     *            the client IP address value (For security tests).
-     * 
-     * @return true if access is granted, else false
-     */
-    @Override
-    public boolean login(String username, char[] password, String iPAddress)
-	    throws IOException, SQLException {
+/**
+ * Our own Acme Company authentication of remote client users. This methods
+ * overrides the {@code DefaultFileConfigurator.login} method. <br>
+ * The (username, password) values are checked against the user_login table.
+ * 
+ * @param username
+ *            the username sent by client side
+ * @param password
+ *            the user password sent by client side
+ * @param iPAddress
+ *            the client IP address value (For security tests).
+ * 
+ * @return true if access is granted, else false
+ */
+@Override
+public boolean login(String username, char[] password, String iPAddress)
+	throws IOException, SQLException {
 	Connection connection = null;
 
 	try {
-	    // Extract a Connection from our Pool
-	    connection = this.getConnection();
+		// Extract a Connection from our Pool
+		connection = this.getConnection();
 
-	    // Compute the hash of the password
-	    Sha1 sha1 = new Sha1();
-	    String hashPassword = null;
+		// Compute the hash of the password
+		Sha1 sha1 = new Sha1();
+		String hashPassword = null;
 
-	    try {
+		try {
 			hashPassword = sha1.getHexHash(new String(password).getBytes());
-	    } catch (Exception e) {
+		} catch (Exception e) {
 			throw new IOException("Unexpected Sha1 failure", e);
-	    }
+		}
 
-	    // Check (username, password) existence in user_login table
-	    String sql = "SELECT username FROM user_login "
-		    + "WHERE username = ? AND hash_password = ?";
-	    PreparedStatement prepStatement = connection.prepareStatement(sql);
-	    prepStatement.setString(1, username);
-	    prepStatement.setString(2, hashPassword);
+		// Check (username, password) existence in user_login table
+		String sql = "SELECT username FROM user_login "
+			+ "WHERE username = ? AND hash_password = ?";
+		PreparedStatement prepStatement = connection.prepareStatement(sql);
+		prepStatement.setString(1, username);
+		prepStatement.setString(2, hashPassword);
 
-	    ResultSet rs = prepStatement.executeQuery();
+		ResultSet rs = prepStatement.executeQuery();
 
-	    if (rs.next()) {
+		if (rs.next()) {
 		// Yes! (username, password) are authenticated
 			return true;
-	    }
+		}
 
-	    return false;
+		return false;
 	} finally {
-	    if (connection != null) {
+		if (connection != null) {
 		connection.close();
-	    }
+		}
 	}
-  }
+}
 ```
 
 **Note**: 
@@ -538,15 +538,15 @@ The `RemoteSession` is created only if the KRemote Files Manager has authenticat
 Example of `RemoteSession` creation:
 
 ```java
-	// Define URL of the path to the ServerFileManager servlet
-	String url = "https://www.acme.org/ServerFileManager";
+// Define URL of the path to the ServerFileManager servlet
+String url = "https://www.acme.org/ServerFileManager";
 
-	// The login info for strong authentication on server side
-	String username = "myUsername";
-	char[] password = { 'm', 'y', 'P', 'a', 's', 's', 'w', 'o', 'r', 'd' };
+// The login info for strong authentication on server side
+String username = "myUsername";
+char[] password = { 'm', 'y', 'P', 'a', 's', 's', 'w', 'o', 'r', 'd' };
 
-	// Establish a session with the remote server
-	RemoteSession remoteSession = new RemoteSession(url, username, password);
+// Establish a session with the remote server
+RemoteSession remoteSession = new RemoteSession(url, username, password);
 ```
 
 ### Defining a proxy
@@ -554,17 +554,17 @@ Example of `RemoteSession` creation:
 Communication via an (authenticating) proxy server is done using a `java.net.Proxy` instance. If proxy requires authentication, pass the credentials via a `java.net. PasswordAuthentication` instance:
 
 ```java
-	Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(
-		"proxyHostname", 8080));
+Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(
+    "proxyHostname", 8080));
 
-	PasswordAuthentication passwordAuthentication = null;
+PasswordAuthentication passwordAuthentication = null;
 
-	// If proxy requires authentication:
-	passwordAuthentication = new PasswordAuthentication("proxyUsername",
-		"proxyPassword".toCharArray());
+// If proxy requires authentication:
+passwordAuthentication = new PasswordAuthentication("proxyUsername",
+	"proxyPassword".toCharArray());
 
-	RemoteSession remoteSession = new RemoteSession(url, username,
-		password, proxy, passwordAuthentication);
+RemoteSession remoteSession = new RemoteSession(url, username,
+	password, proxy, passwordAuthentication);
 ```
 
 ### Handling Exceptions thrown by RemoteSession 
@@ -598,10 +598,10 @@ The requirements for the Java class on the server are explained in [RPC rules fo
 Example of a `RemoteSession` call:
 
 ```java
-	// OK: call the add(int a, int b) remote method that returns a + b:
-	String result = remoteSession.call(
-		"org.kawanfw.examples.Calculator.add" ", 41, 42);
-	System.out.println("Calculator Result: " + result);
+// OK: call the add(int a, int b) remote method that returns a + b:
+String result = remoteSession.call(
+    "org.kawanfw.examples.Calculator.add" ", 41, 42);
+    System.out.println("Calculator Result: " + result);
 ```
 
  of  the  remote `org.kawanfw.examples.Calculator` class:
@@ -691,43 +691,43 @@ When using `java.io.FilenameFilter` and `java.io.FileFilter` filters, the filter
 ### Example of RemoteFile usage
 
 ```java
-	// Define URL of the path to the ServerFileManager servlet
-	String url = "https://www.acme.org/ServerFileManager";
+// Define URL of the path to the ServerFileManager servlet
+String url = "https://www.acme.org/ServerFileManager";
 
-	// The login info for strong authentication on server side
-	String username = "myUsername";
-	char[] password = { 'm', 'y', 'P', 'a', 's', 's', 'w', 'o', 'r', 'd' };
+// The login info for strong authentication on server side
+String username = "myUsername";
+char[] password = { 'm', 'y', 'P', 'a', 's', 's', 'w', 'o', 'r', 'd' };
 
-	// Establish a session with the remote server
-	RemoteSession remoteSession = new RemoteSession(url, username, password);
+// Establish a session with the remote server
+RemoteSession remoteSession = new RemoteSession(url, username, password);
 
-	// Create a new RemoteFile that maps a file on remote server
-	RemoteFile remoteFile = new RemoteFile(remoteSession, "/Koala.jpg");
+// Create a new RemoteFile that maps a file on remote server
+RemoteFile remoteFile = new RemoteFile(remoteSession, "/Koala.jpg");
 
-	// We can use all the familiar java.io.File methods on our RemoteFile
-	if (remoteFile.exists()) {
-	    System.out.println(remoteFile.getName() + " length  : "
-		    + remoteFile.length());
-	    System.out.println(remoteFile.getName() + " canWrite: "
-		    + remoteFile.canWrite());
-	}
+// We can use all the familiar java.io.File methods on our RemoteFile
+if (remoteFile.exists()) {
+    System.out.println(remoteFile.getName() + " length  : "
+                       + remoteFile.length());
+    System.out.println(remoteFile.getName() + " canWrite: "
+                       + remoteFile.canWrite());
+}
 
-	// List files on our remote root directory
-	remoteFile = new RemoteFile(remoteSession, "/");
+// List files on our remote root directory
+remoteFile = new RemoteFile(remoteSession, "/");
 
-	RemoteFile[] files = remoteFile.listFiles();
-	for (RemoteFile file : files) {
-	    System.out.println("Remote file: " + file);
-	}
+RemoteFile[] files = remoteFile.listFiles();
+for (RemoteFile file : files) {
+    System.out.println("Remote file: " + file);
+}
 
-	// List all text files in out root directory
-	// using an Apache Commons IO 2.5 FileFiter
-	FileFilter fileFilter = new SuffixFileFilter(".txt");
+// List all text files in out root directory
+// using an Apache Commons IO 2.5 FileFiter
+FileFilter fileFilter = new SuffixFileFilter(".txt");
 
-	files = remoteFile.listFiles(fileFilter);
-	for (RemoteFile file : files) {
-	    System.out.println("Remote text file: " + file);
-	}
+files = remoteFile.listFiles(fileFilter);
+for (RemoteFile file : files) {
+    System.out.println("Remote text file: " + file);
+}
 ```
 
 ## The RemoteInputStream and RemoteOutputStream  classes
@@ -759,24 +759,23 @@ At the end of the read/write, set the Progress Bar progress indicator to 100.
 Declare the global variables used by the Progress Monitor and in the read/write loop:
 
 ```java
-    /**
-     * Progress between 0 and 100.
-     * Updated by doFileUpload() at each 1% input stream read
-     */
-    private int progress = 0;
+/**
+ * Progress between 0 and 100.
+ * Updated by doFileUpload() at each 1% input stream read
+ */
+private int progress = 0;
 
-    /** Says to doFileUpload() code if transfer is cancelled */
-    private boolean cancelled = false;
-
+/** Says to doFileUpload() code if transfer is cancelled */
+private boolean cancelled = false;
 ```
 
 The `doFileUpload` method is called to upload a file:
 
 ```java
- /**
+/**
  * Do the file upload.
- */
- private void doFileUpload() {
+*/
+private void doFileUpload() {
 	try {
 
 	    // BEGIN MODIFY WITH YOUR VALUES
@@ -848,33 +847,33 @@ The `doFileUpload` method is called to upload a file:
 Assuming you want to display a progress indicator using `javax.swing.SwingWorker`, you would start as a Thread the previous code. To update the progress bar, the `SwingWorker.doInBackground()` method would be overridden :
 
 ```java
-	@Override
-	public Void doInBackground() {
-	    // Reset values at each upload
-	    cancelled = false;
-	    progress = 0;
-	    setProgress(0);
+@Override
+public Void doInBackground() {
+    // Reset values at each upload
+    cancelled = false;
+    progress = 0;
+    setProgress(0);
 
-	    // progress is ++ at each
-	    // 1% file transfer in doFileUpload()
-	    while (progress < 100) {
-          try {
-              Thread.sleep(50);
-          } catch (InterruptedException ignore) {
-          }
+    // progress is ++ at each
+    // 1% file transfer in doFileUpload()
+    while (progress < 100) {
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException ignore) {
+        }
 
-          // Say to doFileUpload() that
-          // user has cancelled the upload
-          if (isCancelled()) {
-              cancelled = true;
-              break;
-          }
+        // Say to doFileUpload() that
+        // user has cancelled the upload
+        if (isCancelled()) {
+            cancelled = true;
+            break;
+        }
 
-          setProgress(Math.min(progress, 100));
-	    }
+        setProgress(Math.min(progress, 100));
+    }
 
-	    return null;
-	}
+    return null;
+}
 ```
 
  A complete example is available in [FileTransferProgressMonitorDemo.java](http://www.kremote-files.com/soft/1.0/src/FileTransferProgressMonitorDemo.java).
@@ -978,11 +977,11 @@ Please note that `RemoteSession` is not thread safe: only one thread may access 
 However, `RemoteSession` is cloneable : just `clone` your current `RemoteSession` to get a new one to use for simultaneous file operations:
 
 ```java
-	// Establish a session with the remote server
-	RemoteSession remoteSession = new RemoteSession(url, username, password);
+// Establish a session with the remote server
+RemoteSession remoteSession = new RemoteSession(url, username, password);
 
-	// Establish a secondary RemoteSession for background thread:
-	RemoteSession secondaryRemoteSession = remoteSession.clone();
+// Establish a secondary RemoteSession for background thread:
+RemoteSession secondaryRemoteSession = remoteSession.clone();
 ```
 
 ## Using RemoteSession to different KRemote Files Servers 
@@ -994,24 +993,24 @@ There is nothing to set on the client side. Simply use different `url` parameter
 For each `url` defined, there must be a corresponding Server File Manager servlet on the server side:
 
 ```java
-	// The main Server File Manager
-	String url = "https://www.acme.org/ServerFileManager";
+// The main Server File Manager
+String url = "https://www.acme.org/ServerFileManager";
 
-	// The second Server File Manager
-	String url2 = "https://www.acme.org/ServerFileManager2";
+// The second Server File Manager
+String url2 = "https://www.acme.org/ServerFileManager2";
 
-	// The login info for strong authentication on server side
-	// (Assuming it's the same for the two Server File Managers)
-	String username = "myUsername";
-	char[] password = { 'm', 'y', 'P', 'a', 's', 's', 'w', 'o', 'r', 'd' };
+// The login info for strong authentication on server side
+// (Assuming it's the same for the two Server File Managers)
+String username = "myUsername";
+char[] password = { 'm', 'y', 'P', 'a', 's', 's', 'w', 'o', 'r', 'd' };
 
-	// Establish a session with the first remote server
-	RemoteSession remoteSession = new RemoteSession(url, username,
-		password);
+// Establish a session with the first remote server
+RemoteSession remoteSession = new RemoteSession(url, username,
+	password);
 
-	// Establish a session with the second remote server
-	RemoteSession remoteSession2 = new RemoteSession(url2,
-		username, password);
+// Establish a session with the second remote server
+RemoteSession remoteSession2 = new RemoteSession(url2,
+	username, password);
 ```
 
 There is some configuration on the server side: a second Server File Manager servlet must be defined in `web.xml` with the corresponding  new Configurators classes passed as parameters to the new servlet:
@@ -1054,25 +1053,25 @@ The [SessionParameters](http://www.kremote-files.com/soft/1.0/javadoc/org/kawanf
 This example shows how to change some timeout default values:
 
 ```java
-	String url = "https://www.acme.org/ServerFileManager";
-	String username = "myUsername";
-	char[] password = { 'm', 'y', 'P', 'a', 's', 's', 'w', 'o', 'r', 'd' };
+String url = "https://www.acme.org/ServerFileManager";
+String username = "myUsername";
+char[] password = { 'm', 'y', 'P', 'a', 's', 's', 'w', 'o', 'r', 'd' };
 
-	SessionParameters sessionParameters = new SessionParameters();
+SessionParameters sessionParameters = new SessionParameters();
 
-	// Sets the timeout until a connection is established to 10 seconds
-	sessionParameters.setConnectTimeout(10);
+// Sets the timeout until a connection is established to 10 seconds
+sessionParameters.setConnectTimeout(10);
 
-	// Sets the read timeout to 60 seconds
-	sessionParameters.setReadTimeout(60);
+// Sets the read timeout to 60 seconds
+sessionParameters.setReadTimeout(60);
 
-	// We will use no proxy
-	Proxy proxy = null;
-	PasswordAuthentication passwordAuthentication = null;
+// We will use no proxy
+Proxy proxy = null;
+PasswordAuthentication passwordAuthentication = null;
 
-	RemoteSession remoteSession = new RemoteSession(url, username,
-		password, proxy, passwordAuthentication, sessionParameters);
-	// Etc.
+RemoteSession remoteSession = new RemoteSession(url, username,
+	password, proxy, passwordAuthentication, sessionParameters);
+// Etc.
 ```
 
 ##  Managing temporary files
