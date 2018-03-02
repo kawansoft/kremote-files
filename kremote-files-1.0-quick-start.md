@@ -93,18 +93,18 @@ Or for Maven users:
     */
    public static RemoteSession remoteSessionBuilder() throws IOException {
 
-     // Path to the ServerFileManager Servlet:
-     String url = "http://localhost:8080/kremote-files/ServerFileManager";
-
-     // (usename, password) for authentication on server side.
-     // No authentication will be done for our Quick Start:
-     String username = "username";
-     char[] password = { 'd', 'e', 'm', 'o' };
-
-     // Establish a session with the remote server
-     RemoteSession remoteSession = new RemoteSession(url, username,
-         password);
-     return remoteSession;
+       // Path to the ServerFileManager Servlet:
+       String url = "http://localhost:8080/kremote-files/ServerFileManager";
+    
+       // (usename, password) for authentication on server side.
+       // No authentication will be done for our Quick Start:
+       String username = "username";
+       char[] password = { 'd', 'e', 'm', 'o' };
+    
+       // Establish a session with the remote server
+       RemoteSession remoteSession = new RemoteSession(url, username,
+           password);
+       return remoteSession;
    }
    ```
 
@@ -132,95 +132,95 @@ Or for Maven users:
     *             if communication or configuration error is raised
     */
    public void doIt() throws IOException {
-
-     // Define userHome var
-     String userHome = System.getProperty("user.home") + File.separator;
-     System.out.println("\"user.home\" is: " + userHome);
-
-     // Create a remote directory on the server
-     // RemoteFile methods are the same as java.io.File methods
-     System.out.println("Creating remote /mydir...");
-     RemoteFile remoteDir = new RemoteFile(remoteSession, "/mydir");
-     remoteDir.mkdirs();
-
-     // Creating a subdirectory on the server
-     System.out.println("Creating remote /mydir/subdir...");
-     RemoteFile remoteSubdir = new RemoteFile(remoteSession,
-         "/mydir/subdir");
-     remoteSubdir.mkdir();
-
-     // Upload two files Koala.jpg and Tulips.jpg file located in our
-     // user.home directory to the remote directory /mydir
-     File image1 = new File(userHome + "Koala.jpg");
-     File image2 = new File(userHome + "Tulips.jpg");
-
-     System.out.println(
-         "Uploading " + userHome + " files to remote /mydir...");
-
-     Path pathImage1 = image1.toPath();
-     try (OutputStream outImage1 = new RemoteOutputStream(remoteSession,
-         "/mydir/Koala.jpg");) {
-         Files.copy(pathImage1, outImage1);
-     }
-
-     Path pathImage2 = image2.toPath();
-     try (OutputStream outImage2 = new RemoteOutputStream(remoteSession,
-         "/mydir/Tulips.jpg");) {
-         Files.copy(pathImage2, outImage2);
-     }
-
-     // List all files located in remote directory /mydir
-     RemoteFile[] remoteFiles = remoteDir.listFiles();
-     System.out.println();
-     System.out.println("All files located in " + remoteDir + "     : "
-         + Arrays.asList(remoteFiles));
-
-     // List sub-directories only of remote directory /mydir
-     // Uses an Apache Commons IO FilterFilter
-     FileFilter fileFilter = DirectoryFileFilter.DIRECTORY;
-
-     remoteFiles = remoteDir.listFiles(fileFilter);
-     System.out.println("Subdirectories of " + remoteDir + ": "
-         + Arrays.asList(remoteFiles));
-
-     RemoteFile koala = new RemoteFile(remoteSession, "/mydir/Koala.jpg");
-     System.out.println();
-     System.out.println("Display remote " + koala + " info...");
-     System.out.println("last modified: " + new Date(koala.lastModified()));
-     System.out.println("length       : " + koala.length());
-     System.out.println("Parent       : " + koala.getParent());
-
-     // Rename a file on server
-     System.out.println();
-     RemoteFile koalaRenamed = new RemoteFile(remoteSession,
-         "/mydir/Koala_RENAMED.jpg");
-     System.out.println("Renaming " + koala + " to " + koalaRenamed + "...");
-     boolean renameDone = koala.renameTo(koalaRenamed);
-     System.out.println("Rename done: " + renameDone);
-
-     // Download the files - with a new name - in our user.home directory
-     File downloadedImage1 = new File(userHome + "downloaded-Koala.jpg");
-     File downloadedImage2 = new File(userHome + "downloaded-Tulips.jpg");
-
-     System.out.println();
-     System.out.println(
-         "Downloading files from remote /mydir in " + userHome + "...");
-
-     Path pathDownloadedImage1 = downloadedImage1.toPath();
-     try (InputStream inImage1 = new RemoteInputStream(remoteSession,
-         "/mydir/Koala_RENAMED.jpg");) {
-         Files.copy(inImage1, pathDownloadedImage1,
-             StandardCopyOption.REPLACE_EXISTING);
-     }
-
-     Path pathDownloadedImage2 = downloadedImage2.toPath();
-     try (InputStream inImage2 = new RemoteInputStream(remoteSession,
-         "/mydir/Tulips.jpg");) {
-         Files.copy(inImage2, pathDownloadedImage2,
-             StandardCopyOption.REPLACE_EXISTING);
-     }
-
-     System.out.println("Done!");
+       
+       // Define userHome var
+       String userHome = System.getProperty("user.home") + File.separator;
+       System.out.println("\"user.home\" is: " + userHome);
+       
+       // Create a remote directory on the server
+       // RemoteFile methods are the same as java.io.File methods
+       System.out.println("Creating remote /mydir...");
+       RemoteFile remoteDir = new RemoteFile(remoteSession, "/mydir");
+       remoteDir.mkdirs();
+       
+       // Creating a subdirectory on the server
+       System.out.println("Creating remote /mydir/subdir...");
+       RemoteFile remoteSubdir = new RemoteFile(remoteSession,
+           "/mydir/subdir");
+       remoteSubdir.mkdir();
+       
+       // Upload two files Koala.jpg and Tulips.jpg file located in our
+       // user.home directory to the remote directory /mydir
+       File image1 = new File(userHome + "Koala.jpg");
+       File image2 = new File(userHome + "Tulips.jpg");
+       
+       System.out.println(
+           "Uploading " + userHome + " files to remote /mydir...");
+       
+       Path pathImage1 = image1.toPath();
+       try (OutputStream outImage1 = new RemoteOutputStream(remoteSession,
+           "/mydir/Koala.jpg");) {
+           Files.copy(pathImage1, outImage1);
+       }
+       
+       Path pathImage2 = image2.toPath();
+       try (OutputStream outImage2 = new RemoteOutputStream(remoteSession,
+           "/mydir/Tulips.jpg");) {
+           Files.copy(pathImage2, outImage2);
+       }
+       
+       // List all files located in remote directory /mydir
+       RemoteFile[] remoteFiles = remoteDir.listFiles();
+       System.out.println();
+       System.out.println("All files located in " + remoteDir + "     : "
+           + Arrays.asList(remoteFiles));
+       
+       // List sub-directories only of remote directory /mydir
+       // Uses an Apache Commons IO FilterFilter
+       FileFilter fileFilter = DirectoryFileFilter.DIRECTORY;
+       
+       remoteFiles = remoteDir.listFiles(fileFilter);
+       System.out.println("Subdirectories of " + remoteDir + ": "
+           + Arrays.asList(remoteFiles));
+       
+       RemoteFile koala = new RemoteFile(remoteSession, "/mydir/Koala.jpg");
+       System.out.println();
+       System.out.println("Display remote " + koala + " info...");
+       System.out.println("last modified: " + new Date(koala.lastModified()));
+       System.out.println("length       : " + koala.length());
+       System.out.println("Parent       : " + koala.getParent());
+       
+       // Rename a file on server
+       System.out.println();
+       RemoteFile koalaRenamed = new RemoteFile(remoteSession,
+           "/mydir/Koala_RENAMED.jpg");
+       System.out.println("Renaming " + koala + " to " + koalaRenamed + "...");
+       boolean renameDone = koala.renameTo(koalaRenamed);
+       System.out.println("Rename done: " + renameDone);
+       
+       // Download the files - with a new name - in our user.home directory
+       File downloadedImage1 = new File(userHome + "downloaded-Koala.jpg");
+       File downloadedImage2 = new File(userHome + "downloaded-Tulips.jpg");
+       
+       System.out.println();
+       System.out.println(
+           "Downloading files from remote /mydir in " + userHome + "...");
+       
+       Path pathDownloadedImage1 = downloadedImage1.toPath();
+       try (InputStream inImage1 = new RemoteInputStream(remoteSession,
+           "/mydir/Koala_RENAMED.jpg");) {
+           Files.copy(inImage1, pathDownloadedImage1,
+               StandardCopyOption.REPLACE_EXISTING);
+       }
+       
+       Path pathDownloadedImage2 = downloadedImage2.toPath();
+       try (InputStream inImage2 = new RemoteInputStream(remoteSession,
+           "/mydir/Tulips.jpg");) {
+           Files.copy(inImage2, pathDownloadedImage2,
+               StandardCopyOption.REPLACE_EXISTING);
+       }
+       
+       System.out.println("Done!");
    }
    ```
 
