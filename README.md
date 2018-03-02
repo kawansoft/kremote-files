@@ -372,43 +372,43 @@ The following example will check that the username and password passed by the cl
  */
 @Override
 public boolean login(String username, char[] password, String iPAddress)
-	throws IOException, SQLException {
-	Connection connection = null;
+    throws IOException, SQLException {
+    Connection connection = null;
 
-	try {
-		// Extract a Connection from our Pool
-		connection = this.getConnection();
+    try {
+        // Extract a Connection from our Pool
+        connection = this.getConnection();
 
-		// Compute the hash of the password
-		Sha1 sha1 = new Sha1();
-		String hashPassword = null;
+        // Compute the hash of the password
+        Sha1 sha1 = new Sha1();
+        String hashPassword = null;
 
-		try {
-			hashPassword = sha1.getHexHash(new String(password).getBytes());
-		} catch (Exception e) {
-			throw new IOException("Unexpected Sha1 failure", e);
-		}
+        try {
+            hashPassword = sha1.getHexHash(new String(password).getBytes());
+        } catch (Exception e) {
+            throw new IOException("Unexpected Sha1 failure", e);
+        }
 
-		// Check (username, password) existence in user_login table
-		String sql = "SELECT username FROM user_login "
-			+ "WHERE username = ? AND hash_password = ?";
-		PreparedStatement prepStatement = connection.prepareStatement(sql);
-		prepStatement.setString(1, username);
-		prepStatement.setString(2, hashPassword);
+        // Check (username, password) existence in user_login table
+        String sql = "SELECT username FROM user_login "
+            + "WHERE username = ? AND hash_password = ?";
+        PreparedStatement prepStatement = connection.prepareStatement(sql);
+        prepStatement.setString(1, username);
+        prepStatement.setString(2, hashPassword);
 
-		ResultSet rs = prepStatement.executeQuery();
+        ResultSet rs = prepStatement.executeQuery();
 
-		if (rs.next()) {
-		// Yes! (username, password) are authenticated
-			return true;
-		}
+        if (rs.next()) {
+        // Yes! (username, password) are authenticated
+            return true;
+        }
 
-		return false;
-	} finally {
-		if (connection != null) {
-		connection.close();
-		}
-	}
+        return false;
+    } finally {
+        if (connection != null) {
+        connection.close();
+        }
+    }
 }
 ```
 
@@ -776,71 +776,71 @@ The `doFileUpload` method is called to upload a file:
  * Do the file upload.
 */
 private void doFileUpload() {
-	try {
+    try {
 
-	    // BEGIN MODIFY WITH YOUR VALUES
-	    String userHome = System.getProperty("user.home");
+        // BEGIN MODIFY WITH YOUR VALUES
+        String userHome = System.getProperty("user.home");
 
-	    String url = "http://localhost:8080/kremote-files/ServerFileManager";
-	    String username = "username";
-	    char[] password = "password".toCharArray();
+        String url = "http://localhost:8080/kremote-files/ServerFileManager";
+        String username = "username";
+        char[] password = "password".toCharArray();
 
-	    File file = new File(userHome + File.separator + "image_1.jpg");
-	    String pathname = "/image_1_1.jpg"; // remote file path
-	    // END MODIFY WITH YOUR VALUES
+        File file = new File(userHome + File.separator + "image_1.jpg");
+        String pathname = "/image_1_1.jpg"; // remote file path
+        // END MODIFY WITH YOUR VALUES
 
-	    RemoteSession remoteSession = new RemoteSession(url, username,
-		    password);
+        RemoteSession remoteSession = new RemoteSession(url, username,
+            password);
 
-	    long fileLength = file.length();
+        long fileLength = file.length();
 
-	    try (InputStream in = new BufferedInputStream(
-		    new FileInputStream(file));
-		    OutputStream out = new RemoteOutputStream(remoteSession,
-			    pathname, fileLength);) {
+        try (InputStream in = new BufferedInputStream(
+            new FileInputStream(file));
+            OutputStream out = new RemoteOutputStream(remoteSession,
+                pathname, fileLength);) {
 
-		int tempLen = 0;
-		byte[] buffer = new byte[1024 * 4];
-		int n = 0;
+        int tempLen = 0;
+        byte[] buffer = new byte[1024 * 4];
+        int n = 0;
 
-		while ((n = in.read(buffer)) != -1) {
-		    tempLen += n;
+        while ((n = in.read(buffer)) != -1) {
+            tempLen += n;
 
-		    // Test if user has cancelled the upload
-		    if (cancelled)
-			throw new InterruptedException(
-				"Upload cancelled by User!");
+            // Test if user has cancelled the upload
+            if (cancelled)
+            throw new InterruptedException(
+                "Upload cancelled by User!");
 
-		    // Add 1 to progress for each 1% upload
-		    if (tempLen > fileLength / 100) {
-				tempLen = 0;
-			progress++;
-		    }
+            // Add 1 to progress for each 1% upload
+            if (tempLen > fileLength / 100) {
+                tempLen = 0;
+            progress++;
+            }
 
-		    out.write(buffer, 0, n);
-		}
+            out.write(buffer, 0, n);
+        }
 
-		out.close();
+        out.close();
 
-	    } finally {
-		// When finished, set to the maximum value to stop the
-		// ProgressMonitor
-			progress = 100;
-	    }
+        } finally {
+        // When finished, set to the maximum value to stop the
+        // ProgressMonitor
+            progress = 100;
+        }
 
-	    remoteSession.logoff();
+        remoteSession.logoff();
 
-	    System.out.println("File upload done.");
-	} catch (Exception e) {
+        System.out.println("File upload done.");
+    } catch (Exception e) {
 
-	    if (e instanceof InterruptedException) {
-		System.out.println(e.getMessage());
-			return;
-	    }
+        if (e instanceof InterruptedException) {
+        System.out.println(e.getMessage());
+            return;
+        }
 
-	    System.err.println("Exception thrown during Upload:");
-	    e.printStackTrace();
-	}
+        System.err.println("Exception thrown during Upload:");
+        e.printStackTrace();
+    }
 }
 ```
 
