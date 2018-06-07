@@ -40,7 +40,7 @@ Add the jar libraries of the `/lib` subdirectory to your IDE project or developm
 Or for Maven users:
 
 ```xml
-<groupId>com.remote-files</groupId>
+<groupId>com.kremote-files</groupId>
 <artifactId>kremote-files</artifactId>
 <version>1.0</version>
 ```
