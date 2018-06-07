@@ -246,7 +246,7 @@ Add the jars of the `/lib` subdirectory to your Servlet container webapp library
 Create a “Server” project and add the jars of the `/lib` subdirectory to your development `CLASSPATH`, or for Maven users:
 
 ```xml
-<groupId>com.remote-files</groupId>
+<groupId>com.kremote-files</groupId>
 <artifactId>kremote-files</artifactId>
 <version>1.0</version>
 ```
@@ -256,7 +256,7 @@ Create a “Server” project and add the jars of the `/lib` subdirectory to you
 Create a “Client” project and add to your development `CLASSPATH` the path to the jars located in the `/lib` subdirectory of your installation folder, or for Maven users:
 
 ```xml
-<groupId>com.remote-files</groupId>
+<groupId>com.kremote-files</groupId>
 <artifactId>kremote-files</artifactId>
 <version>1.0</version>
 ```
