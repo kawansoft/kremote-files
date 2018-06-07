@@ -974,7 +974,7 @@ You may use multiple different `RemoteSession` in your programs. And you may use
 
 Please note that `RemoteSession` is not thread safe: only one thread may access an `RemoteSession` instance at a time. Otherwise, results are unpredictable.
 
-However, `RemoteSession` is cloneable : just `clone` your current `RemoteSession` to get a new one to use for simultaneous file operations:
+However, `RemoteSession` is cloneable. Just `clone` your current `RemoteSession` to get a new one to use for simultaneous file operations:
 
 ```java
 // Establish a session with the remote server
