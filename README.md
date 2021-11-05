@@ -1,6 +1,6 @@
 
 # KRemote Files v1.0 - User Guide
-<img src="https://www.aceql.com/favicon.png" alt="AceQ HTTP Icon"/>
+<img src="https://docs.aceql.com/favicon.png" alt="AceQ HTTP Icon"/>
 
    * [Fundamentals](#fundamentals)
       * [What is KRemote Files?](#what-is-kremote-files)
